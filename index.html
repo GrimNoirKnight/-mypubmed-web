@@ -1,0 +1,405 @@
+<!-- 
+  index.html
+  My PubMed Research Assistant
+
+  Created by Alan D. Keizer
+  © 2025 A. D. Keizer. All rights reserved.
+
+  Description:
+  A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch).
+  Allows searching, saving, and managing articles with optional filtering and metadata scoring.
+
+  Version: 00.003.018-alpha
+
+  Change Log:
+  - Added "README Viewer" with attribute table
+  - Added filter: show only articles with all required metadata
+  - Added Metadata Score per article (fields present / total)
+  - Full code comments and field type classification
+
+  Attribute Name        | Type    | Optional | Notes
+  ---------------------+---------+----------+--------------------------------------------------------
+  pmid                 | String  | No       | Primary PubMed Identifier
+  title                | String  | No       | Article title (always available)
+  authors              | String  | No       | Author list, formatted as a readable string
+  journal              | String  | No       | Journal name where article was published
+  pubDate              | Date    | No       | Publication year or full date string
+  abstract             | String  | Yes      | Often missing in older articles
+  fullTextAvailable    | Boolean | Yes      | Derived from PMC presence; links to free full text
+  doi                  | String  | Yes      | Not always assigned
+  pmcid                | String  | Yes      | Open access ID from PubMed Central
+  volume               | String  | Yes      | Journal volume number
+  issue                | String  | Yes      | Issue number if available
+  pages                | String  | Yes      | Page range of the article
+  keywords             | String  | Yes      | Publisher-supplied terms
+  affiliations         | String  | Yes      | May not be structured in older articles
+  funding              | String  | Yes      | Source information if tagged
+  conflictOfInterest   | String  | Yes      | Disclosures if present
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My PubMed Research Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #FFFFFF;
+      color: #3C3B6E;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #3C3B6E;
+      color: #FFFFFF;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    header p {
+      font-size: 1.1em;
+      font-weight: 300;
+      margin-top: 8px;
+    }
+
+    main {
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 60%;
+      border: 2px solid #B22234;
+      color: #3C3B6E;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      background-color: #B22234;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    button:hover {
+      background-color: #8b1a25;
+    }
+
+    .save-button {
+      background-color: transparent;
+      border: 2px solid #B22234;
+      color: #B22234;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+
+    .save-button:hover {
+      background-color: #B22234;
+      color: white;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    .result {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 20px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    a {
+      color: #B22234;
+      text-decoration: underline;
+    }
+
+    #results-count {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+      color: #3C3B6E;
+      border-top: 2px solid #B22234;
+      font-size: 0.95em;
+    }
+
+    footer a {
+      color: #3C3B6E;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    #readme {
+      margin-top: 40px;
+      padding-top: 10px;
+      border-top: 2px solid #B22234;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My PubMed Research Assistant</h1>
+    <p>Your fast, AI-ready tool for exploring medical research</p>
+  </header>
+
+  <main>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search PubMed...">
+      <button onclick="searchPubMed()">Search</button>
+      <button onclick="showSavedArticles()">View Saved Articles</button>
+      <button onclick="toggleReadme()">Show README</button>
+      <label style="margin-left: 15px;">
+        <input type="checkbox" id="filterStrict" onchange="searchPubMed()"> Show only complete metadata
+      </label>
+    </div>
+
+    <div id="results-count"></div>
+    <div id="results"></div>
+
+    <div id="readme" style="display:none;">
+      <h2>README: Attribute Reference Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>pmid</td><td>String</td><td>No</td><td>Primary PubMed Identifier</td></tr>
+          <tr><td>title</td><td>String</td><td>No</td><td>Always present</td></tr>
+          <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+          <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+          <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
+          <tr><td>abstract</td><td>String</td><td>Yes</td><td>Missing in legacy articles</td></tr>
+          <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>Based on PMC presence</td></tr>
+          <tr><td>doi</td><td>String</td><td>Yes</td><td>Not always assigned</td></tr>
+          <tr><td>pmcid</td><td>String</td><td>Yes</td><td>Open access PMC ID</td></tr>
+          <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+          <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+          <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+          <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher-supplied tags</td></tr>
+          <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+          <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding disclosures</td></tr>
+          <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI statements</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 MyPubMedResearchAssistant.com — Powered by 
+    <a href="https://flixai.net" target="_blank">FlixAI</a> | Created by 
+    <a href="https://goodforyouproductions.com" target="_blank">Good For You Productions</a>
+  </footer>
+
+  <script>
+    function formatDate(date) {
+      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function getSavedArticles() {
+      const saved = localStorage.getItem('savedArticles');
+      return saved ? JSON.parse(saved) : {};
+    }
+
+    function saveArticle(pmid) {
+      const saved = getSavedArticles();
+      if (!saved[pmid]) {
+        saved[pmid] = { dateSaved: new Date().toISOString() };
+        localStorage.setItem('savedArticles', JSON.stringify(saved));
+        searchPubMed();
+      }
+    }
+
+    function removeArticle(pmid) {
+      const saved = getSavedArticles();
+      if (saved[pmid]) {
+        delete saved[pmid];
+        localStorage.setItem('savedArticles', JSON.stringify(saved));
+
+        const input = document.getElementById('searchInput');
+        if (input.value) searchPubMed();
+        else showSavedArticles();
+      }
+    }
+
+    async function searchPubMed() {
+      const term = document.getElementById('searchInput').value;
+      const resultsDiv = document.getElementById('results');
+      const resultsCount = document.getElementById('results-count');
+      resultsDiv.innerHTML = 'Searching...';
+      resultsCount.textContent = '';
+
+      const savedArticles = getSavedArticles();
+
+      const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&retmax=38&term=${encodeURIComponent(term)}`;
+      const searchRes = await fetch(searchUrl);
+      const searchData = await searchRes.json();
+      const idList = searchData.esearchresult.idlist;
+
+      if (idList.length === 0) {
+        resultsDiv.innerHTML = 'No results found.';
+        return;
+      }
+
+      renderArticlesByIdList(idList, savedArticles, resultsDiv, resultsCount);
+    }
+
+    async function showSavedArticles() {
+      const saved = getSavedArticles();
+      const pmids = Object.keys(saved);
+      const resultsDiv = document.getElementById('results');
+      const resultsCount = document.getElementById('results-count');
+
+      if (pmids.length === 0) {
+        resultsDiv.innerHTML = 'No saved articles.';
+        resultsCount.textContent = '';
+        return;
+      }
+
+      resultsDiv.innerHTML = 'Loading saved articles...';
+      renderArticlesByIdList(pmids, saved, resultsDiv, resultsCount);
+    }
+
+    async function renderArticlesByIdList(idList, savedArticles, resultsDiv, resultsCount) {
+      const strictMode = document.getElementById('filterStrict').checked;
+      const ids = idList.join(',');
+      const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${ids}&retmode=xml`;
+      const fetchRes = await fetch(fetchUrl);
+      const xmlText = await fetchRes.text();
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+      const articles = xmlDoc.getElementsByTagName('PubmedArticle');
+
+      let html = '';
+      let renderedCount = 0;
+
+      for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
+
+        const title = article.getElementsByTagName('ArticleTitle')[0]?.textContent?.trim();
+        const pmid = article.getElementsByTagName('PMID')[0]?.textContent;
+        const abstract = article.getElementsByTagName('AbstractText')[0]?.textContent?.trim();
+        const authorsNode = article.getElementsByTagName('AuthorList')[0];
+        const journalNode = article.getElementsByTagName('Journal')[0]?.getElementsByTagName('Title')[0];
+        const pubDateNode = article.getElementsByTagName('PubDate')[0] || article.getElementsByTagName('DateCreated')[0];
+
+        let fullText = 'No';
+        let pmcid = null;
+        const articleIdList = article.getElementsByTagName('ArticleIdList')[0];
+        if (articleIdList) {
+          const ids = articleIdList.getElementsByTagName('ArticleId');
+          for (let id of ids) {
+            if (id.getAttribute('IdType') === 'pmc') {
+              pmcid = id.textContent;
+              fullText = 'Yes';
+            }
+          }
+        }
+
+        const requiredFields = {
+          title, pmid, authors: !!authorsNode, journal: !!journalNode, pubDate: !!pubDateNode
+        };
+        if (strictMode && Object.values(requiredFields).includes(false)) continue;
+
+        const allFields = {
+          ...requiredFields,
+          abstract: !!abstract,
+          fullTextAvailable: fullText === 'Yes',
+          pmcid: !!pmcid
+        };
+        const total = Object.keys(allFields).length;
+        const present = Object.values(allFields).filter(Boolean).length;
+        const scorePercent = Math.round((present / total) * 100);
+
+        const authorText = authorsNode ? Array.from(authorsNode.getElementsByTagName('Author'))
+          .map(a => a.textContent.trim()).join(', ') : 'Unknown';
+        const journal = journalNode?.textContent || 'Unknown journal';
+        const pubDate = pubDateNode?.textContent || 'Unknown date';
+        const dateSaved = savedArticles[pmid]?.dateSaved 
+          ? formatDate(new Date(savedArticles[pmid].dateSaved)) 
+          : null;
+
+        renderedCount += 1;
+
+        html += `
+          <div class="result">
+            <h3>${renderedCount}. ${title || 'Untitled Article'}</h3>
+            <p><span class="label">PMID:</span> ${pmid}</p>
+            <p><span class="label">Authors:</span> ${authorText}</p>
+            <p><span class="label">Journal:</span> ${journal}</p>
+            <p><span class="label">Publication Date:</span> ${pubDate}</p>
+            <p><span class="label">Abstract:</span> ${abstract || 'No abstract available.'}</p>
+            <p><span class="label">Full Text Available:</span> ${fullText}</p>
+            <p><span class="label">Date Saved:</span> ${
+              dateSaved 
+                ? `${dateSaved} <button class="save-button" onclick="removeArticle('${pmid}')">Remove from Saved</button>`
+                : `<button class="save-button" onclick="saveArticle('${pmid}')">Save Article</button>`
+            }</p>
+            <p><span class="label">Metadata Score:</span> ${present}/${total} fields present (${scorePercent}%)</p>
+            <p><a href="https://pubmed.ncbi.nlm.nih.gov/${pmid}/" target="_blank">View on PubMed</a></p>
+          </div>
+        `;
+      }
+
+      resultsCount.textContent = `Articles Found: ${renderedCount}`;
+      resultsDiv.innerHTML = html || 'No articles matched the filter.';
+    }
+
+    function toggleReadme() {
+      const readme = document.getElementById('readme');
+      readme.style.display = readme.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.getElementById('searchInput').addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        searchPubMed();
+      }
+    });
+  </script>
+
+</body>
+</html>
