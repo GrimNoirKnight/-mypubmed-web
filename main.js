@@ -1,5 +1,9 @@
 // main.js
 // v00.003.026-alpha
+//
+//  Created by Alan D. Keizer
+//  © 2025 Alan D. Keizer. All rights reserved.
+//
 // JavaScript logic for MyPubMed Research Assistant (modular version)
 
 // Global debug log array
