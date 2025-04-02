@@ -3,22 +3,21 @@
   My PubMed Research Assistant
 
   Created by Alan D. Keizer
-  © 2025 Alan D. Keizer. All rights reserved.
+  © 2025 A. D. Keizer. All rights reserved.
 
   Description:
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
   with fallback support for plain-text metadata parsing from /?format=pubmed endpoints.
 
-  Version: 00.003.025-alpha
+  Version: 00.003.026-alpha
 
   Change Log:
-  - Debug logger added beneath results panel
-  - Fixed all instances of stuck "Loading..." bug
-  - All buttons now behave as expected (no more auto-trigger)
-  - README corrected to match required field schema
-  - Footer shows version + attribution
-  - Improved fallback error handling
-  - UI consistency improvements
+  - Fixed fallback parser loading issue (CORS + logic fix)
+  - README table updated and confirmed optional fields
+  - Debug log retained across searches
+  - Checkboxes no longer trigger auto-search
+  - Footer shows current version info
+  - Additional error handling and retry on fallback mode
 
   Required Fields for Rendering: (pmid, title, authors, journal, pubDate)
   
@@ -174,6 +173,16 @@
       border-top: 2px solid #B22234;
     }
 
+    #debug-log {
+      white-space: pre-wrap;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #333;
+      margin-top: 30px;
+    }
+
     table {
       border-collapse: collapse;
       margin-top: 10px;
@@ -187,266 +196,70 @@
     th {
       background-color: #eee;
     }
-
-    #debugLog {
-      margin-top: 40px;
-      padding: 10px;
-      border-top: 2px solid #3C3B6E;
-      background: #f8f8f8;
-      font-size: 13px;
-      line-height: 1.4em;
-      white-space: pre-wrap;
-    }
-
-    .debug-label {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>My PubMed Research Assistant</h1>
-    <p>Your fast, AI-ready tool for exploring medical research!</p>
-  </header>
 
-  <main>
-    <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search PubMed...">
-      <button onclick="searchPubMed()">Search</button>
-      <button onclick="showSavedArticles()">View Saved Articles</button>
-      <button onclick="toggleReadme()">Show README</button>
-      <label style="margin-left: 15px;">
-        <input type="checkbox" id="filterStrict"> Require All Metadata
-      </label>
-      <label style="margin-left: 10px;">
-        <input type="checkbox" id="usePlainText"> Use Plain-Text Fallback
-      </label>
-    </div>
+<header>
+  <h1>My PubMed Research Assistant</h1>
+  <p>Your fast, AI-ready tool for exploring medical research</p>
+</header>
 
-    <div id="results-count">Ready.</div>
-    <div id="results">Waiting for search...</div>
+<main>
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search PubMed...">
+    <button onclick="searchPubMed()">Search</button>
+    <button onclick="showSavedArticles()">View Saved Articles</button>
+    <button onclick="toggleReadme()">Show README</button>
+    <label style="margin-left: 15px;">
+      <input type="checkbox" id="filterStrict"> Require All Metadata
+    </label>
+    <label style="margin-left: 15px;">
+      <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
+    </label>
+  </div>
 
-    <div id="readme" style="display:none;">
-      <h2>README: Attribute Reference Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>pmid</td><td>String</td><td>No</td><td>Primary PubMed Identifier</td></tr>
-          <tr><td>title</td><td>String</td><td>No</td><td>Always present</td></tr>
-          <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
-          <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
-          <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
-          <tr><td>abstract</td><td>String</td><td>Yes</td><td>May be missing in older records</td></tr>
-          <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>True if in PMC</td></tr>
-          <tr><td>doi</td><td>String</td><td>Yes</td><td>Optional DOI</td></tr>
-          <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PMC Identifier</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <div id="results-count"></div>
+  <div id="results">Ready.</div>
+  <div id="debug-log"></div>
 
-    <div id="debugLog">
-      <div class="debug-label">Debug Log:</div>
-      <div id="debugContent">(nothing yet)</div>
-    </div>
-  </main>
+  <div id="readme" style="display:none;">
+    <h2>README: Attribute Reference Table</h2>
+    <table>
+      <thead>
+        <tr><th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
+        <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
+        <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+        <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+        <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
+        <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
+        <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+        <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
+        <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
+        <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
+        <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
+        <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
+        <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+        <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
+        <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
+        <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+        <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
+        <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+        <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
 
-  <footer>
-    &copy; 2025 MyPubMedResearchAssistant.com v00.003.025 — Powered by Cats | Created by Clean Kitty Development
-  </footer>
+<footer>
+  &copy; 2025 MyPubMedResearchAssistant.com <strong>v00.003.026-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+</footer>
 
-  <!-- Scripts will be appended here in final part -->
+<!-- External JavaScript -->
+<script src="main.js"></script>
+
 </body>
 </html>
-<script>
-  const debug = msg => {
-    const box = document.getElementById("debugContent");
-    box.textContent += `\n> ${msg}`;
-  };
-
-  function formatDate(date) {
-    return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-  }
-
-  function getSavedArticles() {
-    const saved = localStorage.getItem('savedArticles');
-    return saved ? JSON.parse(saved) : {};
-  }
-
-  function saveArticle(pmid) {
-    const saved = getSavedArticles();
-    if (!saved[pmid]) {
-      saved[pmid] = { dateSaved: new Date().toISOString() };
-      localStorage.setItem('savedArticles', JSON.stringify(saved));
-      debug(`Saved article ${pmid}`);
-      searchPubMed();
-    }
-  }
-
-  function removeArticle(pmid) {
-    const saved = getSavedArticles();
-    if (saved[pmid]) {
-      delete saved[pmid];
-      localStorage.setItem('savedArticles', JSON.stringify(saved));
-      debug(`Removed article ${pmid}`);
-      searchPubMed();
-    }
-  }
-
-  function toggleReadme() {
-    const readme = document.getElementById('readme');
-    readme.style.display = readme.style.display === 'block' ? 'none' : 'block';
-  }
-
-  function getInputStates() {
-    return {
-      strictMode: document.getElementById('filterStrict').checked,
-      usePlain: document.getElementById('usePlainText').checked,
-      term: document.getElementById('searchInput').value.trim()
-    };
-  }
-
-  async function searchPubMed() {
-    const { term, usePlain, strictMode } = getInputStates();
-    const savedArticles = getSavedArticles();
-    const resultsDiv = document.getElementById("results");
-    const resultsCount = document.getElementById("results-count");
-    resultsDiv.innerHTML = "Loading...";
-    resultsCount.textContent = "Searching...";
-    document.getElementById("debugContent").textContent = "";
-
-    if (!term) {
-      resultsDiv.innerHTML = "Please enter a search term.";
-      return;
-    }
-
-    try {
-      const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&retmax=100&term=${encodeURIComponent(term)}`;
-      debug(`Searching PubMed for: ${term}`);
-      const searchRes = await fetch(searchUrl);
-      const searchData = await searchRes.json();
-      const idList = searchData.esearchresult.idlist;
-
-      if (!idList.length) {
-        debug(`No results for "${term}"`);
-        resultsDiv.innerHTML = "No results.";
-        resultsCount.textContent = "Articles Found: 0";
-        return;
-      }
-
-      debug(`Found ${idList.length} IDs`);
-      await renderArticles(idList, savedArticles, resultsDiv, resultsCount, strictMode, usePlain);
-    } catch (err) {
-      debug(`Error: ${err.message}`);
-      resultsDiv.innerHTML = "An error occurred.";
-    }
-  }
-
-  async function showSavedArticles() {
-    const pmids = Object.keys(getSavedArticles());
-    const resultsDiv = document.getElementById("results");
-    const resultsCount = document.getElementById("results-count");
-    resultsDiv.innerHTML = "Loading saved articles...";
-    debug(`Loading saved articles (${pmids.length})`);
-    await renderArticles(pmids, getSavedArticles(), resultsDiv, resultsCount, false, false);
-  }
-
-  async function renderArticles(idList, savedArticles, resultsDiv, resultsCount, strictMode, usePlain) {
-    let html = "", count = 0;
-    for (let i = 0; i < idList.length; i++) {
-      const pmid = idList[i];
-      debug(`Fetching: ${pmid} ${usePlain ? "(fallback)" : "(xml)"}`);
-
-      let data = usePlain ? await fetchPlainText(pmid) : await fetchXML(pmid);
-      if (!data || !data.pmid || !data.title || !data.authors || !data.journal || !data.pubDate) {
-        if (strictMode) continue;
-      }
-
-      const score = Object.values(data).filter(Boolean).length;
-      const total = 15;
-      const scorePercent = Math.round(score / total * 100);
-
-      html += `
-        <div class="result">
-          <h3>${++count}. ${data.title}</h3>
-          <p><span class="label">PMID:</span> ${pmid}</p>
-          <p><span class="label">Authors:</span> ${data.authors || "Unknown"}</p>
-          <p><span class="label">Journal:</span> ${data.journal || "Unknown"}</p>
-          <p><span class="label">Date:</span> ${data.pubDate || "Unknown"}</p>
-          <p><span class="label">Abstract:</span> ${data.abstract || "No abstract available."}</p>
-          <p><span class="label">Metadata Score:</span> ${score}/${total} (${scorePercent}%)</p>
-          <p><span class="label">Date Saved:</span> ${
-            savedArticles[pmid]?.dateSaved
-              ? `${formatDate(new Date(savedArticles[pmid].dateSaved))} 
-                <button class="save-button" onclick="removeArticle('${pmid}')">Remove from Saved</button>`
-              : `<button class="save-button" onclick="saveArticle('${pmid}')">Save Article</button>`
-          }</p>
-          <p><a href="https://pubmed.ncbi.nlm.nih.gov/${pmid}/" target="_blank">View on PubMed</a></p>
-        </div>
-      `;
-    }
-
-    resultsDiv.innerHTML = html || "No articles matched.";
-    resultsCount.textContent = `Articles Found: ${count}`;
-  }
-
-  async function fetchXML(pmid) {
-    try {
-      const res = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`);
-      const text = await res.text();
-      const doc = new DOMParser().parseFromString(text, "text/xml");
-      const article = doc.querySelector("PubmedArticle");
-
-      const title = article?.querySelector("ArticleTitle")?.textContent || "";
-      const authors = Array.from(article.querySelectorAll("Author")).map(a => {
-        const last = a.querySelector("LastName")?.textContent || "";
-        const fore = a.querySelector("ForeName")?.textContent || "";
-        return `${fore} ${last}`.trim();
-      }).join(", ");
-      const abstract = article?.querySelector("AbstractText")?.textContent || "";
-      const journal = article?.querySelector("Journal > Title")?.textContent || "";
-      const pubDate = article?.querySelector("PubDate")?.textContent || "";
-
-      return { pmid, title, authors, abstract, journal, pubDate };
-    } catch (err) {
-      debug(`XML fetch error for ${pmid}: ${err.message}`);
-      return null;
-    }
-  }
-
-  async function fetchPlainText(pmid) {
-    try {
-      const res = await fetch(`https://pubmed.ncbi.nlm.nih.gov/${pmid}/?format=pubmed`);
-      const text = await res.text();
-      const lines = text.split("\n");
-
-      const getField = tag => {
-        const line = lines.find(l => l.startsWith(tag + " - "));
-        return line ? line.replace(`${tag} - `, "").trim() : "";
-      };
-
-      const authors = lines.filter(l => l.startsWith("FAU -")).map(l => l.replace("FAU - ", "")).join(", ");
-      const title = getField("TI");
-      const abstract = getField("AB");
-      const journal = getField("JT");
-      const pubDate = getField("DP");
-
-      return { pmid, title, authors, abstract, journal, pubDate };
-    } catch (err) {
-      debug(`Plain-text fetch error for ${pmid}: ${err.message}`);
-      return null;
-    }
-  }
-
-  // Enable pressing Enter to search
-  document.getElementById("searchInput").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      searchPubMed();
-    }
-  });
-</script>
