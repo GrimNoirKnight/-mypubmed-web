@@ -1,5 +1,5 @@
 
-Test v3.028 Results for Myelin THC:
+Test v3.029 Results for Myelin THC:
 
 	0. Page loads before search:
 
@@ -10,32 +10,282 @@ Debug Log:
 
 	1. Click Search with no check boxes:
 
-		<>
+Tester's note: The number of articles found is inconsistant.  I usually see anywhere from 14 to 18 articles found.
+
+Articles Found: 16
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: My PubMed
+> Found 40 IDs
+> Fetching: 40170059 (xml)
+> Fetching: 40158467 (xml)
+> XML fetch error for 40157508: Load failed
+> XML fetch error for 40157215: Load failed
+> XML fetch error for 40148980: Load failed
+> XML fetch error for 40132854: Load failed
+> Fetching: 40112659 (xml)
+> XML fetch error for 40111730: Load failed
+> Fetching: 40069837 (xml)
+> Fetching: 40047122 (xml)
+> XML fetch error for 40032384: Load failed
+> XML fetch error for 40015541: Load failed
+> XML fetch error for 40010838: Load failed
+> XML fetch error for 40008948: Load failed
+> Fetching: 39996014 (xml)
+> XML fetch error for 39987075: Load failed
+> Fetching: 39978229 (xml)
+> XML fetch error for 39971015: Load failed
+> Fetching: 39969598 (xml)
+> XML fetch error for 39965464: Load failed
+> XML fetch error for 39964659: Load failed
+> XML fetch error for 39948493: Load failed
+> Fetching: 39930392 (xml)
+> XML fetch error for 39928186: Load failed
+> Fetching: 39915720 (xml)
+> Fetching: 39912085 (xml)
+> XML fetch error for 39908624: Load failed
+> XML fetch error for 39905429: Load failed
+> Fetching: 39899940 (xml)
+> XML fetch error for 39892065: Load failed
+> Fetching: 39856579 (xml)
+> XML fetch error for 39855181: Load failed
+> XML fetch error for 39851447: Load failed
+> XML fetch error for 39841325: Load failed
+> Fetching: 39833700 (xml)
+> XML fetch error for 39831144: Load failed
+> XML fetch error for 39827529: Load failed
+> Fetching: 39800767 (xml)
+> XML fetch error for 39799090: Load failed
+> Fetching: 39798921 (xml)
 
 	2. Click search with Require All Metadata checked:
 
-		<>
+Tester's note: The number of articles found is inconsistant.  I usually see anywhere from 14 to 18 articles found.
+
+Articles Found: 14
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (xml)
+> Fetching: 38778343 (xml)
+> XML fetch error for 38335658: Load failed
+> XML fetch error for 38190273: Load failed
+> XML fetch error for 36711651: Load failed
+> XML fetch error for 34678230: Load failed
+> Fetching: 34216154 (xml)
+> Fetching: 33815353 (xml)
+> Fetching: 33298334 (xml)
+> XML fetch error for 32956517: Load failed
+> XML fetch error for 32690657: Load failed
+> XML fetch error for 32497151: Load failed
+> XML fetch error for 30529211: Load failed
+> XML fetch error for 30291491: Load failed
+> Fetching: 25857324 (xml)
+> Fetching: 24139960 (xml)
+> Fetching: 24036373 (xml)
+> XML fetch error for 23892791: Load failed
+> XML fetch error for 21480865: Load failed
+> XML fetch error for 21449853: Load failed
+> XML fetch error for 19591937: Load failed
+> XML fetch error for 18037503: Load failed
+> XML fetch error for 17320842: Load failed
+> Fetching: 15389382 (xml)
+> Fetching: 12697742 (xml)
+> Fetching: 12535983 (xml)
+> XML fetch error for 12505705: Load failed
+> XML fetch error for 11015613: Load failed
+> XML fetch error for 8387304: Load failed
+> XML fetch error for 8388853: Load failed
+> XML fetch error for 2450171: Load failed
+> XML fetch error for 3024047: Load failed
+> Fetching: 310454 (xml)
+> Fetching: 1005913 (xml)
+> Fetching: 965964 (xml)
+> XML fetch error for 1113115: Load failed
+> XML fetch error for 4824510: Load failed
+> XML fetch error for 4695669: Load failed
 
 	3. Click Search with Use Plain-Text Fallback checked:
+	
+Tester's note: This is the first time it got all 38.  But everthing has a meta score of 0/5 and everything is "undefined".  For example:
 
-		<>
+	Articles Found: 38
+	
+	Title:
+
+		undefined
+
+	Authors:
+
+		undefined
+
+	Journal:
+
+		undefined (undefined)
+
+	Metadata Score:
+
+		0/5
+
+	View on PubMed
+
+	Save Article
+	
+	Title:
+
+		undefined
+
+	Authors:
+
+		undefined
+
+	Journal:
+
+		undefined (undefined)
+
+	Metadata Score:
+
+		0/5
+
+	View on PubMed
+
+	Save Article
+
+Here are the test results:
+
+Articles Found: 38
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (fallback)
+> Fetching: 38778343 (fallback)
+> Fetching: 38335658 (fallback)
+> Fetching: 38190273 (fallback)
+> Fetching: 36711651 (fallback)
+> Fetching: 34678230 (fallback)
+> Fetching: 34216154 (fallback)
+> Fetching: 33815353 (fallback)
+> Fetching: 33298334 (fallback)
+> Fetching: 32956517 (fallback)
+> Fetching: 32690657 (fallback)
+> Fetching: 32497151 (fallback)
+> Fetching: 30529211 (fallback)
+> Fetching: 30291491 (fallback)
+> Fetching: 25857324 (fallback)
+> Fetching: 24139960 (fallback)
+> Fetching: 24036373 (fallback)
+> Fetching: 23892791 (fallback)
+> Fetching: 21480865 (fallback)
+> Fetching: 21449853 (fallback)
+> Fetching: 19591937 (fallback)
+> Fetching: 18037503 (fallback)
+> Fetching: 17320842 (fallback)
+> Fetching: 15389382 (fallback)
+> Fetching: 12697742 (fallback)
+> Fetching: 12535983 (fallback)
+> Fetching: 12505705 (fallback)
+> Fetching: 11015613 (fallback)
+> Fetching: 8387304 (fallback)
+> Fetching: 8388853 (fallback)
+> Fetching: 2450171 (fallback)
+> Fetching: 3024047 (fallback)
+> Fetching: 310454 (fallback)
+> Fetching: 1005913 (fallback)
+> Fetching: 965964 (fallback)
+> Fetching: 1113115 (fallback)
+> Fetching: 4824510 (fallback)
+> Fetching: 4695669 (fallback)
 
 	4. Click Search with both checked:
 
-		<>
+Articles Found: 0
+No articles matched.
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (fallback)
+> Fetching: 38778343 (fallback)
+> Fetching: 38335658 (fallback)
+> Fetching: 38190273 (fallback)
+> Fetching: 36711651 (fallback)
+> Fetching: 34678230 (fallback)
+> Fetching: 34216154 (fallback)
+> Fetching: 33815353 (fallback)
+> Fetching: 33298334 (fallback)
+> Fetching: 32956517 (fallback)
+> Fetching: 32690657 (fallback)
+> Fetching: 32497151 (fallback)
+> Fetching: 30529211 (fallback)
+> Fetching: 30291491 (fallback)
+> Fetching: 25857324 (fallback)
+> Fetching: 24139960 (fallback)
+> Fetching: 24036373 (fallback)
+> Fetching: 23892791 (fallback)
+> Fetching: 21480865 (fallback)
+> Fetching: 21449853 (fallback)
+> Fetching: 19591937 (fallback)
+> Fetching: 18037503 (fallback)
+> Fetching: 17320842 (fallback)
+> Fetching: 15389382 (fallback)
+> Fetching: 12697742 (fallback)
+> Fetching: 12535983 (fallback)
+> Fetching: 12505705 (fallback)
+> Fetching: 11015613 (fallback)
+> Fetching: 8387304 (fallback)
+> Fetching: 8388853 (fallback)
+> Fetching: 2450171 (fallback)
+> Fetching: 3024047 (fallback)
+> Fetching: 310454 (fallback)
+> Fetching: 1005913 (fallback)
+> Fetching: 965964 (fallback)
+> Fetching: 1113115 (fallback)
+> Fetching: 4824510 (fallback)
+> Fetching: 4695669 (fallback)
 
 	5. Clicked “Show README”:
 
-		<>
+Ready.
+Debug Log:
+(standby... initializing)
+README: Attribute Reference Table
+
+Attribute Name	Type	Optional	Notes
+pmid	String	No	PubMed ID
+title	String	No	Article Title
+authors	String	No	Author list
+journal	String	No	Journal name
+pubDate	Date	No	Publication date
+abstract	String	Yes	Abstract content
+affiliations	String	Yes	Author affiliations
+conflictOfInterest	String	Yes	COI disclosures
+dateSaved	Date	Yes	Save timestamp
+doi	String	Yes	Digital Object ID
+fullTextAvailable	Boolean	Yes	PMC open access?
+funding	String	Yes	Funding sources
+issue	String	Yes	Issue number
+keywords	String	Yes	Publisher keywords
+meSHterms	String	Yes	Medical subject headings
+pages	String	Yes	Page range
+pmcid	String	Yes	PubMed Central ID
+volume	String	Yes	Volume number
+webLink	String	Yes	PubMed URL
+
 
 	6. Clicked Save Article (PMID 39528076):
 
-		<>
+Tester's note:  I could not test.  The website is no longer showing the PMID.  You need to make certain that all five non-optional attributes are displayed.
 	
 	7. Clicked on View Saved Articles:
 
-		<>
+Tester's note:  The Save Article buttons no longer work.
 
 	8. Clicked Remove from Saved (39528076):
 
-		<>
+Tester's note:  Could not test.  See above.
