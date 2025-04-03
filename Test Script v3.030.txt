@@ -3,36 +3,171 @@ Test v3.030 Results for Myelin THC:
 
 	0. Page loads before search:
 
-		<>
+Ready.
+
+Debug Log:
+(standby... initializing)
 
 	1. Click Search with no check boxes:
 
-		<>
+Articles Found: 14
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Error fetching 38335658: Load failed
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Error fetching 34216154: Load failed
+> Error fetching 32956517: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 32497151: Load failed
+> Error fetching 30529211: Load failed
+> Error fetching 30291491: Load failed
+> Error fetching 23892791: Load failed
+> Error fetching 21480865: Load failed
+> Error fetching 21449853: Load failed
+> Error fetching 19591937: Load failed
+> Error fetching 12697742: Load failed
+> Error fetching 12535983: Load failed
+> Error fetching 12505705: Load failed
+> Error fetching 11015613: Load failed
+> Error fetching 8387304: Load failed
+> Error fetching 8388853: Load failed
+> Error fetching 1005913: Load failed
+> Error fetching 965964: Load failed
+> Error fetching 1113115: Load failed
+> Error fetching 4824510: Load failed
+> Error fetching 4695669: Load failed
 
 	2. Click search with Require All Metadata checked:
 
-		<>
+Articles Found: 15
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Error fetching 38335658: Load failed
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Error fetching 34216154: Load failed
+> Error fetching 32956517: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 32497151: Load failed
+> Error fetching 25857324: Load failed
+> Error fetching 24036373: Load failed
+> Error fetching 23892791: Load failed
+> Error fetching 21449853: Load failed
+> Error fetching 18037503: Load failed
+> Error fetching 15389382: Load failed
+> Error fetching 12697742: Load failed
+> Error fetching 12535983: Load failed
+> Error fetching 12505705: Load failed
+> Error fetching 8387304: Load failed
+> Error fetching 2450171: Load failed
+> Error fetching 310454: Load failed
+> Error fetching 1005913: Load failed
+> Error fetching 965964: Load failed
+> Error fetching 1113115: Load failed
+> Error fetching 4695669: Load failed
 
 	3. Click Search with Use Plain-Text Fallback checked:
 
-		<>
+Ready.
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
 
 	4. Click Search with both checked:
 
-		<>
+Ready.
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
 
 	5. Clicked “Show README”:
 
-		<>
+Ready.
+
+Debug Log:
+(standby... initializing)
+README: Attribute Reference Table
+
+Attribute Name	Type	Optional	Notes
+pmid	String	No	PubMed ID
+title	String	No	Article Title
+authors	String	No	Author list
+journal	String	No	Journal name
+pubDate	Date	No	Publication date
+abstract	String	Yes	Abstract content
+affiliations	String	Yes	Author affiliations
+conflictOfInterest	String	Yes	COI disclosures
+dateSaved	Date	Yes	Save timestamp
+doi	String	Yes	Digital Object ID
+fullTextAvailable	Boolean	Yes	PMC open access?
+funding	String	Yes	Funding sources
+issue	String	Yes	Issue number
+keywords	String	Yes	Publisher keywords
+meSHterms	String	Yes	Medical subject headings
+pages	String	Yes	Page range
+pmcid	String	Yes	PubMed Central ID
+volume	String	Yes	Volume number
+webLink	String	Yes	PubMed URL
+
 
 	6. Clicked Save Article (PMID 39528076):
 
-		<>
+Save button does not work.
 	
 	7. Clicked on View Saved Articles:
 
-		<>
+Could not test.  Will not save.
 
 	8. Clicked Remove from Saved (39528076):
 
-		<>
+Could not test.  Will not save.
+		
+		
+Tester's notes:  
+
+
+1. You still are not displaying to the user all five required attributes for each article.  This is what is typically displayed:
+
+	Title:
+
+		CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.
+
+	Authors:
+
+		Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos
+
+	Journal:
+
+		Progress in neurobiology (2024Dec) 
+
+
+2. You also removed from the heeder of the index.html the comments that I put in about the optional an required attributes.  We lost our record of that.  Can you please reconstitute it for me.
+
+3. The Debug Log seems to be displaying less information about the errors than it has in the past.  Did you change it?
+
+4. These need to be displayed with every article:
+
+		Attribute Name		Type		Optional	Notes
+		-------------------------------------------------------
+		title							String	No				Article Title
+		abstract					String	Yes				Abstract content
+		authors						String	No				Author list
+		journal						String	No				Journal name
+		pubDate						Date		No				Publication date
+		pmid							String	No				PubMed ID
+
+5.	The return key does not initiate a search.
+
+6.	Everything has a metadata score of 5/5.
+
