@@ -1,15 +1,17 @@
 /**
  * main.js — Core Logic for MyPubMed.com
- *
- * Version: 00.003.029-alpha
- * Author: A. D. Keizer
+ * 
+ * Author: Alan D. Keizer
  * Copyright © 2025 A. D. Keizer. All rights reserved.
  *
  * Description:
  * Handles all PubMed API interactions, article parsing, metadata scoring,
  * localStorage caching, and UI interactivity.
  *
- * Last Updated: 2025-04-03
+ * Version: 00.003.029-alpha
+ *
+ * Change log:
+ *  - Updated 2025-04-03: Cleaned up header to make it consistant with the other files.
  */
 
 (() => {
