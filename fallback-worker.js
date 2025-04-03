@@ -4,18 +4,14 @@
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
 
+  Version: 00.003.030-alpha
+
   Description:
-  This Cloudflare Worker serves as a proxy fallback to bypass browser CORS
-  restrictions when accessing raw PubMed metadata using the `/?format=pubmed` endpoint.
-  The client can request this endpoint with a `?pmid=` parameter, and the worker
-  will fetch the metadata from `https://pubmed.ncbi.nlm.nih.gov/PMID/?format=pubmed`.
-  
-  Version: 00.003.029-alpha
-  
+  Cloudflare Worker to fetch PubMed's plain-text metadata (format=pubmed)
+  for use as a browser fallback, bypassing CORS and browser blocks.
+
   Change Log:
-  - Initial deployment of plain-text metadata proxy
-  - Adds required CORS headers for browser access
-  - Error handling for missing PMIDs and fetch failures
+  - v00.003.030-alpha: Minor header edits and stability
 */
 
 export default {
@@ -43,9 +39,9 @@ export default {
         }
       });
 
-      const body = await response.text();
+      const text = await response.text();
 
-      return new Response(body, {
+      return new Response(text, {
         status: 200,
         headers: {
           "Content-Type": "text/plain",

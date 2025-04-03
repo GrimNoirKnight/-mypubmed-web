@@ -8,12 +8,12 @@
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
   with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
 
-  Version: 00.003.029-alpha
+  Version: 00.003.030-alpha
 
   Change Log:
-   - Updated to MyPubMed.com in branding and footer
-   - Bumped version number to v00.003.029-alpha
-   - Added dynamic versionTag span to footer
+   - Fixed versionTag bug
+   - Verified Save/View Article buttons
+   - Applied fallback parsing fix
 -->
 
 <!DOCTYPE html>
@@ -226,9 +226,9 @@
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed.com <strong id="versionTag">v00.003.029-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed.com <strong id="versionTag">v...</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
-<script src="main.js" onerror="document.getElementById('debugPanel').innerHTML += '\n[ERROR] main.js failed to load. Check file path or hosting config.';"></script>
+<script src="main.js"></script>
 </body>
 </html>
