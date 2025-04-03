@@ -89,7 +89,7 @@ AU  - Aguado T
 AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
       Department of Biochemistry and Molecular Biology, Complutense University, 
       Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain. Electronic address: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94e0f5f3e1f5f0fbd4e1f7f9baf1e7">[email&#160;protected]</a>.
+      28040, Spain. Electronic address: taguado@ucm.es.
 FAU - Palazuelos, Javier
 AU  - Palazuelos J
 AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
@@ -97,7 +97,7 @@ AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 2803
       Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
       28040, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades 
       Neurodegenerativas (CIBERNED), Madrid 28049, Spain. Electronic address: 
-      <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="442e6a342528253e3121282b37043127296a2137">[email&#160;protected]</a>.
+      j.palazuelos@ucm.es.
 LA  - eng
 PT  - Journal Article
 DEP - 20241109
