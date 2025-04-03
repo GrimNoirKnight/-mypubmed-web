@@ -1,21 +1,17 @@
-// main.js — v00.003.027-alpha
-//
-//  Created by Alan D. Keizer
-//  © 2025 Alan D. Keizer. All rights reserved.
-//
-// JavaScript logic for MyPubMed Research Assistant (modular version)
-// 
-// Refactored to include retry logic and temporarily disable fallback mode
+// main.js — MyPubMedResearchAssistant v00.003.028-alpha
+// Handles search, render, metadata parsing, localStorage, and logging.
 
-const debugLog = [];
+const debugPanel = document.getElementById('debugPanel');
+const fallbackCheck = document.getElementById('fallbackPlain');
+const strictCheck = document.getElementById('filterStrict');
+const resultsDiv = document.getElementById('results');
+const resultsCount = document.getElementById('results-count');
+const searchBox = document.getElementById('searchInput');
+let debugLog = [];
 
-function logDebug(msg) {
+function log(msg) {
   debugLog.push(msg);
-  const panel = document.getElementById("debug-log");
-  if (panel) {
-    panel.style.display = "block";
-    panel.innerHTML = "<strong>Debug Log:</strong><br><pre>" + debugLog.join("\n") + "</pre>";
-  }
+  debugPanel.innerHTML = `<strong>Debug Log:</strong><br><pre>${debugLog.join('\n')}</pre>`;
 }
 
 function formatDate(date) {
@@ -41,92 +37,95 @@ function removeArticle(pmid) {
   if (saved[pmid]) {
     delete saved[pmid];
     localStorage.setItem('savedArticles', JSON.stringify(saved));
-
-    const input = document.getElementById('searchInput');
-    if (input.value) searchPubMed();
+    if (searchBox.value) searchPubMed();
     else showSavedArticles();
   }
 }
 
 async function searchPubMed() {
-  const term = document.getElementById('searchInput').value;
-  const resultsDiv = document.getElementById('results');
-  const resultsCount = document.getElementById('results-count');
-  const debugPanel = document.getElementById('debug-log');
-
+  const term = searchBox.value.trim();
+  const useFallback = fallbackCheck.checked;
+  debugLog = [];
   resultsDiv.innerHTML = 'Searching...';
   resultsCount.textContent = '';
-  debugPanel.innerHTML = '';
-  debugLog.length = 0;
+  log(`> Searching PubMed for: ${term}`);
 
-  const savedArticles = getSavedArticles();
-  logDebug(`> Searching PubMed for: ${term}`);
-
-  const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&retmax=100&term=${encodeURIComponent(term)}`;
-  const searchRes = await fetch(searchUrl);
-  const searchData = await searchRes.json();
-  const idList = searchData.esearchresult.idlist;
-
-  if (idList.length === 0) {
-    resultsDiv.innerHTML = 'No results found.';
+  if (!term) {
+    resultsDiv.innerHTML = 'Please enter a search term.';
     return;
   }
 
-  logDebug(`> Found ${idList.length} IDs`);
-  renderArticlesByIdList(idList, savedArticles, resultsDiv, resultsCount);
+  try {
+    const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&retmax=100&term=${encodeURIComponent(term)}`;
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+    const idList = searchData.esearchresult.idlist;
+
+    if (idList.length === 0) {
+      resultsDiv.innerHTML = 'No results found.';
+      return;
+    }
+
+    log(`> Found ${idList.length} IDs`);
+    const savedArticles = getSavedArticles();
+    renderArticlesByIdList(idList, savedArticles, useFallback);
+  } catch (err) {
+    log(`[ERROR] Failed to search: ${err.message}`);
+    resultsDiv.innerHTML = 'Search failed. Check console.';
+  }
 }
 
 async function showSavedArticles() {
   const saved = getSavedArticles();
   const pmids = Object.keys(saved);
-  const resultsDiv = document.getElementById('results');
-  const resultsCount = document.getElementById('results-count');
-  const debugPanel = document.getElementById('debug-log');
-
-  debugPanel.innerHTML = '';
-  debugLog.length = 0;
-
+  debugLog = [];
+  resultsCount.textContent = '';
   if (pmids.length === 0) {
     resultsDiv.innerHTML = 'No saved articles.';
-    resultsCount.textContent = '';
     return;
   }
 
-  logDebug(`> Loading saved articles (${pmids.length})`);
+  log(`> Loading saved articles (${pmids.length})`);
   resultsDiv.innerHTML = 'Loading saved articles...';
-  renderArticlesByIdList(pmids, saved, resultsDiv, resultsCount);
+  renderArticlesByIdList(pmids, saved, false);
 }
 
-async function fetchXMLWithRetry(pmid, maxRetries = 3) {
-  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      logDebug(`> Fetching: ${pmid} (Attempt ${attempt})`);
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      return parseXMLMetadata(text);
-    } catch (err) {
-      logDebug(`> Fetch error [${pmid}] on attempt ${attempt}: ${err.message}`);
-      if (attempt < maxRetries) await new Promise(r => setTimeout(r, 500));
-    }
-  }
-
-  logDebug(`> Failed after ${maxRetries} attempts for ${pmid}`);
-  return null;
-}
-
-async function renderArticlesByIdList(idList, savedArticles, resultsDiv, resultsCount) {
-  const strictMode = document.getElementById('filterStrict').checked;
+async function renderArticlesByIdList(idList, savedArticles, useFallback) {
+  const strictMode = strictCheck.checked;
   let html = '';
   let renderedCount = 0;
 
   for (let i = 0; i < idList.length; i++) {
     const pmid = idList[i];
-    let article = await fetchXMLWithRetry(pmid);
+    let article = null;
 
-    if (!article || Object.values(article).includes(undefined)) continue;
+    try {
+      if (useFallback) {
+        log(`> Fetching: ${pmid} (fallback)`);
+        const url = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/?format=pubmed`;
+
+        // CORS protection — warn if browser blocks fallback
+        const res = await fetch(url);
+        if (!res.ok || res.type === "opaque") throw new Error("Fallback blocked or failed");
+        const text = await res.text();
+        article = parsePlainTextMetadata(text, pmid);
+      } else {
+        log(`> Fetching: ${pmid} (xml)`);
+        const xmlUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+        const xmlRes = await fetch(xmlUrl);
+        if (!xmlRes.ok) throw new Error("XML fetch failed");
+        const xmlText = await xmlRes.text();
+        article = parseXMLMetadata(xmlText);
+      }
+    } catch (err) {
+      log(`> ${useFallback ? "Plain-text" : "XML"} fetch error for ${pmid}: ${err.message}`);
+      continue;
+    }
+
+    if (!article || Object.values(article).includes(undefined)) {
+      log(`> Error: Some required fields missing for PMID ${pmid}`);
+      continue;
+    }
 
     const { title, authors, journal, pubDate } = article;
     const requiredFields = { pmid, title, authors, journal, pubDate };
@@ -135,12 +134,12 @@ async function renderArticlesByIdList(idList, savedArticles, resultsDiv, results
     const present = Object.values(article).filter(Boolean).length;
     const total = Object.keys(article).length;
     const scorePercent = Math.round((present / total) * 100);
+
     const dateSaved = savedArticles[pmid]?.dateSaved
       ? formatDate(new Date(savedArticles[pmid].dateSaved))
       : null;
 
     renderedCount++;
-
     html += `
       <div class="result">
         <h3>${renderedCount}. ${title}</h3>
@@ -171,8 +170,7 @@ function parseXMLMetadata(xmlText) {
   const pmid = articleNode?.querySelector("PMID")?.textContent;
   const title = articleNode?.querySelector("ArticleTitle")?.textContent;
   const journal = articleNode?.querySelector("Journal > Title")?.textContent;
-  const pubDateNode = articleNode?.querySelector("PubDate, DateCreated");
-  const pubDate = pubDateNode?.textContent;
+  const pubDate = articleNode?.querySelector("PubDate, DateCreated")?.textContent;
 
   const authors = [...articleNode.querySelectorAll("AuthorList > Author")]
     .map(a => {
@@ -184,12 +182,27 @@ function parseXMLMetadata(xmlText) {
   return { pmid, title, authors, journal, pubDate };
 }
 
+function parsePlainTextMetadata(text, pmid) {
+  const lines = text.split('\n');
+  const meta = { pmid };
+
+  lines.forEach(line => {
+    if (line.startsWith("TI  -")) meta.title = line.replace("TI  -", "").trim();
+    if (line.startsWith("AU  -")) meta.authors = (meta.authors || "") + line.replace("AU  -", "").trim() + ', ';
+    if (line.startsWith("JT  -")) meta.journal = line.replace("JT  -", "").trim();
+    if (line.startsWith("DP  -")) meta.pubDate = line.replace("DP  -", "").trim();
+  });
+
+  if (meta.authors) meta.authors = meta.authors.replace(/, $/, '');
+  return meta;
+}
+
 function toggleReadme() {
   const readme = document.getElementById('readme');
   readme.style.display = readme.style.display === 'block' ? 'none' : 'block';
 }
 
-document.getElementById('searchInput').addEventListener('keydown', function (event) {
+searchBox.addEventListener('keydown', event => {
   if (event.key === 'Enter') {
     event.preventDefault();
     searchPubMed();

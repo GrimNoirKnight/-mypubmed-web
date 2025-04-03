@@ -1,0 +1,38 @@
+
+Test v3.027 Results for Myelin THC:
+
+	0. Page loads before search:
+
+		<>
+
+	1. Click Search with no check boxes:
+
+		<>
+
+	2. Click search with Require All Metadata checked:
+
+		<>
+
+	3. Click Search with Use Plain-Text Fallback checked:
+
+		<>
+
+	4. Click Search with both checked:
+
+		<>
+
+	5. Clicked “Show README”:
+
+		<>
+
+	6. Clicked Save Article (PMID 39528076):
+
+		<>
+	
+	7. Clicked on View Saved Articles:
+
+		<>
+
+	8. Clicked Remove from Saved (39528076):
+
+		<>
