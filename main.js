@@ -1,125 +1,148 @@
 /**
- * main.js — Core Logic for MyPubMedResearchAssistant.com
+ * main.js — Core Logic for MyPubMed.com
  *
  * Version: 00.003.029-alpha
- * Author: Alan D. Keizer
+ * Author: A. D. Keizer
  * Copyright © 2025 A. D. Keizer. All rights reserved.
  *
  * Description:
- * Handles PubMed search, metadata parsing, scoring, saving, and UI updates.
- * Includes Cloudflare proxy fallback for plain-text fetches.
+ * Handles all PubMed API interactions, article parsing, metadata scoring,
+ * localStorage caching, and UI interactivity.
  *
- * Last Updated: 2025-04-02
+ * Last Updated: 2025-04-03
  */
 
-const VERSION = "00.003.029-alpha";
-document.addEventListener("DOMContentLoaded", () => {
-  log(`MyPubMedResearchAssistant ${VERSION} loaded.`);
-  document.getElementById("versionTag").textContent = `v${VERSION}`;
-});
+(() => {
+  const VERSION = '00.003.029-alpha';
 
-const CLOUDFLARE_PROXY = "https://steep-wind-e765.mymsfzkxqq.workers.dev";
+  // Show version in footer if versionTag exists
+  document.addEventListener("DOMContentLoaded", () => {
+    const tag = document.getElementById("versionTag");
+    if (tag) tag.textContent = `v${VERSION}`;
+  });
 
-function log(message) {
-  const logBox = document.getElementById("debugLog");
-  if (logBox) {
-    logBox.value += `\n> ${message}`;
-    logBox.scrollTop = logBox.scrollHeight;
-  }
-  console.log(message);
-}
+  async function searchPubMed() {
+    const query = document.getElementById("searchInput").value.trim();
+    const requireAll = document.getElementById("filterStrict")?.checked;
+    const useFallback = document.getElementById("fallbackPlain")?.checked;
 
-async function searchPubMed() {
-  log("Searching PubMed...");
-  const query = document.getElementById("searchInput").value.trim();
-  const requireAll = document.getElementById("requireAll").checked;
-  const useFallback = document.getElementById("useFallback").checked;
+    logDebug(`> Searching PubMed for: ${query}`);
+    if (!query) return;
 
-  if (!query) return alert("Please enter a search term.");
+    try {
+      const esearchURL = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(query)}&retmode=json&retmax=40`;
+      const searchRes = await fetch(esearchURL).then(r => r.json());
+      const idList = searchRes.esearchresult.idlist;
 
-  let ids = await getPubMedIds(query);
-  log(`Found ${ids.length} IDs`);
+      logDebug(`> Found ${idList.length} IDs`);
+      const results = [];
 
-  const articles = [];
+      for (const pmid of idList) {
+        let data;
+        try {
+          if (useFallback) {
+            const proxyURL = `https://steep-wind-e765.mymsfzkxqq.workers.dev/?pmid=${pmid}`;
+            data = await fetch(proxyURL).then(r => r.text());
+            logDebug(`> Fetching: ${pmid} (fallback)`);
+          } else {
+            const efetchURL = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+            const xml = await fetch(efetchURL).then(r => r.text());
+            logDebug(`> Fetching: ${pmid} (xml)`);
+            data = parseXMLMetadata(xml);
+          }
 
-  for (const id of ids) {
-    let data = null;
-    if (!useFallback) {
-      data = await fetchXML(id);
-    }
-    if (!data && useFallback) {
-      data = await fetchFallback(id);
-    }
-    if (data) {
-      const parsed = parseArticle(data);
-      if (!requireAll || (requireAll && parsed.metadataScore === 5)) {
-        articles.push(parsed);
+          if (data) {
+            const score = scoreMetadata(data);
+            if (!requireAll || score === 5) results.push({ ...data, score });
+          }
+
+        } catch (e) {
+          logDebug(`> XML fetch error for ${pmid}: ${e.message}`);
+        }
       }
+
+      displayResults(results);
+    } catch (e) {
+      logDebug(`[ERROR] ${e.message}`);
     }
   }
 
-  displayArticles(articles);
-}
+  function parseXMLMetadata(xml) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xml, "text/xml");
 
-async function getPubMedIds(query) {
-  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&term=${encodeURIComponent(query)}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  return json.esearchresult.idlist;
-}
+    const pmid = doc.querySelector("PMID")?.textContent;
+    const title = doc.querySelector("ArticleTitle")?.textContent;
+    const authors = Array.from(doc.querySelectorAll("Author")).map(a => {
+      const last = a.querySelector("LastName")?.textContent;
+      const fore = a.querySelector("ForeName")?.textContent;
+      return `${fore} ${last}`;
+    }).join(", ");
+    const journal = doc.querySelector("Journal > Title")?.textContent;
+    const pubDate = doc.querySelector("PubDate")?.textContent || "";
+    const abstract = doc.querySelector("Abstract > AbstractText")?.textContent;
 
-async function fetchXML(pmid) {
-  try {
-    const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=${pmid}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("XML fetch failed");
-    return await res.text();
-  } catch (err) {
-    log(`XML fetch error for ${pmid}: ${err.message}`);
-    return null;
+    return { pmid, title, authors, journal, pubDate, abstract };
   }
-}
 
-async function fetchFallback(pmid) {
-  try {
-    const url = `${CLOUDFLARE_PROXY}/?pmid=${pmid}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Fallback fetch failed");
-    return await res.text();
-  } catch (err) {
-    log(`Fallback error for ${pmid}: ${err.message}`);
-    return null;
+  function scoreMetadata(article) {
+    const required = ['pmid', 'title', 'authors', 'journal', 'pubDate'];
+    const missing = required.filter(k => !article[k]);
+    return 5 - missing.length;
   }
-}
 
-function parseArticle(data) {
-  // Placeholder parsing logic — insert your real XML/Plain-text parser here
-  return {
-    pmid: "123456",
-    title: "Placeholder Title",
-    metadataScore: 5
+  function displayResults(articles) {
+    const container = document.getElementById("results");
+    const count = document.getElementById("results-count");
+
+    count.textContent = `Articles Found: ${articles.length}`;
+    container.innerHTML = "";
+
+    if (articles.length === 0) {
+      container.innerHTML = `<p>No articles matched.</p>`;
+      return;
+    }
+
+    for (const article of articles) {
+      const div = document.createElement("div");
+      div.className = "result";
+      div.innerHTML = `
+        <p class="label">Title:</p><p>${article.title}</p>
+        <p class="label">Authors:</p><p>${article.authors}</p>
+        <p class="label">Journal:</p><p>${article.journal} (${article.pubDate})</p>
+        <p class="label">Metadata Score:</p><p>${article.score}/5</p>
+        <p><a href="https://pubmed.ncbi.nlm.nih.gov/${article.pmid}/" target="_blank">View on PubMed</a></p>
+        <button class="save-button" onclick="saveArticle('${article.pmid}')">Save Article</button>
+      `;
+      container.appendChild(div);
+    }
+  }
+
+  function logDebug(msg) {
+    const panel = document.getElementById("debugPanel").querySelector("pre");
+    panel.textContent += `\n${msg}`;
+  }
+
+  window.searchPubMed = searchPubMed;
+
+  window.toggleReadme = () => {
+    const r = document.getElementById("readme");
+    r.style.display = r.style.display === "none" ? "block" : "none";
   };
-}
 
-function displayArticles(articles) {
-  const container = document.getElementById("results");
-  container.innerHTML = "";
-  document.getElementById("articleCount").textContent = `Articles Found: ${articles.length}`;
+  window.showSavedArticles = () => {
+    const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
+    displayResults(saved);
+    logDebug(`> Loading saved articles (${saved.length})`);
+  };
 
-  for (const article of articles) {
-    const div = document.createElement("div");
-    div.innerHTML = `<strong>${article.title}</strong> (PMID: ${article.pmid})`;
-    container.appendChild(div);
-  }
-}
-
-function showSavedArticles() {
-  log("Showing saved articles...");
-  // Implementation goes here
-}
-
-function toggleReadme() {
-  const readme = document.getElementById("readmeBox");
-  if (!readme) return;
-  readme.style.display = readme.style.display === "none" ? "block" : "none";
-}
+  window.saveArticle = async (pmid) => {
+    const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+    const xml = await fetch(url).then(r => r.text());
+    const article = parseXMLMetadata(xml);
+    const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
+    saved.push(article);
+    localStorage.setItem("savedArticles", JSON.stringify(saved));
+    logDebug(`> Saved article ${pmid}`);
+  };
+})();
