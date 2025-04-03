@@ -1,6 +1,5 @@
 <!--
-  index.html
-  MyPubMed.com
+  index.html - For MyPubMed.com
 
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
@@ -14,7 +13,7 @@
   Change Log:
    - Updated to MyPubMed.com in branding and footer
    - Bumped version number to v00.003.029-alpha
-   - Preserved all previous layout and controls
+   - Added dynamic versionTag span to footer
 -->
 
 <!DOCTYPE html>
@@ -227,7 +226,7 @@
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed.com <strong>v00.003.029-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed.com <strong id="versionTag">v00.003.029-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
 <script src="main.js" onerror="document.getElementById('debugPanel').innerHTML += '\n[ERROR] main.js failed to load. Check file path or hosting config.';"></script>

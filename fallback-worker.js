@@ -1,6 +1,5 @@
 /*
-  fallback-worker.js
-  MyPubMed.com
+  fallback-worker.js - For MyPubMed.com
   
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
