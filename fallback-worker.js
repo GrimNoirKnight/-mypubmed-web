@@ -1,18 +1,14 @@
 /*
   fallback-worker.js
   My PubMed Research Assistant
-
   Created by Alan D. Keizer
-  © 2025 A. D. Keizer. All rights reserved.
-
+  © 2025 Alan D. Keizer. All rights reserved.
   Description:
   This Cloudflare Worker serves as a proxy fallback to bypass browser CORS
   restrictions when accessing raw PubMed metadata using the `/?format=pubmed` endpoint.
   The client can request this endpoint with a `?pmid=` parameter, and the worker
   will fetch the metadata from `https://pubmed.ncbi.nlm.nih.gov/PMID/?format=pubmed`.
-
   Version: 00.003.029-alpha
-
   Change Log:
   - Initial deployment of plain-text metadata proxy
   - Adds required CORS headers for browser access

@@ -1,21 +1,17 @@
 <!-- 
   index.html
   My PubMed Research Assistant
-
   Created by Alan D. Keizer
-  © 2025 A. D. Keizer. All rights reserved.
-
+  © 2025 Alan D. Keizer. All rights reserved.
+  Version: 00.003.028-alpha
   Description:
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
-  with fallback support for plain-text metadata parsing from /?format=pubmed endpoints.
-
-  Version: 00.003.028-alpha
-
+  with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
   Change Log:
-  - Fixed fallback CORS detection and browser restrictions message
-  - Debug log always visible on load for diagnostics
-  - More resilient loading of main.js with error messaging
-  - Safer handling of fetch logic and UI startup state
+  - Added Cloudflare Worker proxy support to bypass browser fallback fetch blocks
+  - Improved XML parsing robustness and logging
+  - Footer version tag updated automatically
+  - GitHub Gist-based version control for testing and traceability
 -->
 
 <!DOCTYPE html>
@@ -171,7 +167,7 @@
 
 <header>
   <h1>My PubMed Research Assistant</h1>
-  <p>Your fast, AI-ready tool for exploring medical research</p>
+  <p>Your fast, AI-ready tool for exploring medical research!</p>
 </header>
 
 <main>

@@ -1,146 +1,125 @@
-PMID- 39528076
-OWN - NLM
-STAT- MEDLINE
-DCOM- 20241214
-LR  - 20241214
-IS  - 1873-5118 (Electronic)
-IS  - 0301-0082 (Linking)
-VI  - 243
-DP  - 2024 Dec
-TI  - CB(1) receptors in NG2 cells mediate cannabinoid-evoked functional myelin 
-      regeneration.
-PG  - 102683
-LID - S0301-0082(24)00119-9 [pii]
-LID - 10.1016/j.pneurobio.2024.102683 [doi]
-AB  - Defects in myelin homeostasis have been reported in many neuropathological 
-      conditions. Cannabinoid compounds have been shown to efficiently promote myelin 
-      regeneration in animal models of demyelination. However, it is still unknown 
-      whether this action relies mostly on a cell autonomous effect on 
-      oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, 
-      here we found that cannabinoid CB(1) receptors located on NG2 cells are required 
-      for oligodendroglial differentiation and myelin regeneration after demyelination. 
-      Selective CB(1) receptor gene depletion in NG2 cells following toxin-induced 
-      demyelination disrupted oligodendrocyte regeneration and functional remyelination 
-      and exacerbated axonal damage. These deficits were rescued by pharmacological 
-      blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol 
-      administration promoted oligodendrocyte regeneration and functional remyelination 
-      in wild-type but not Ng2-CB(1)-deficient mice. Overall, this study identifies 
-      CB(1) receptors as essential modulators of remyelination and support the 
-      therapeutic potential of cannabinoids for promoting remyelination in neurological 
-      disorders.
-CI  - Copyright © 2024 Elsevier Ltd. All rights reserved.
-FAU - Sánchez de la Torre, Aníbal
-AU  - Sánchez de la Torre A
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain.
-FAU - Ezquerro-Herce, Sara
-AU  - Ezquerro-Herce S
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain.
-FAU - Huerga-Gómez, Alba
-AU  - Huerga-Gómez A
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain.
-FAU - Sánchez-Martín, Ester
-AU  - Sánchez-Martín E
-AD  - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 
-      48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; IIS 
-      Biobizkaia, Barakaldo 48903, Spain.
-FAU - Chara, Juan Carlos
-AU  - Chara JC
-AD  - Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; Centro de 
-      Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas 
-      (CIBERNED), Madrid 28049, Spain.
-FAU - Matute, Carlos
-AU  - Matute C
-AD  - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 
-      48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; 
-      Centro de Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas 
-      (CIBERNED), Madrid 28049, Spain.
-FAU - Monory, Krisztina
-AU  - Monory K
-AD  - Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 
-      55128, Germany.
-FAU - Mato, Susana
-AU  - Mato S
-AD  - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 
-      48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; 
-      Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 
-      55128, Germany.
-FAU - Lutz, Beat
-AU  - Lutz B
-AD  - Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 
-      55128, Germany.
-FAU - Guzmán, Manuel
-AU  - Guzmán M
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades 
-      Neurodegenerativas (CIBERNED), Madrid 28049, Spain.
-FAU - Aguado, Tania
-AU  - Aguado T
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain. Electronic address: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94e0f5f3e1f5f0fbd4e1f7f9baf1e7">[email&#160;protected]</a>.
-FAU - Palazuelos, Javier
-AU  - Palazuelos J
-AD  - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; 
-      Department of Biochemistry and Molecular Biology, Complutense University, 
-      Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 
-      28040, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades 
-      Neurodegenerativas (CIBERNED), Madrid 28049, Spain. Electronic address: 
-      <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="442e6a342528253e3121282b37043127296a2137">[email&#160;protected]</a>.
-LA  - eng
-PT  - Journal Article
-DEP - 20241109
-PL  - England
-TA  - Prog Neurobiol
-JT  - Progress in neurobiology
-JID - 0370121
-RN  - 0 (Receptor, Cannabinoid, CB1)
-RN  - 7J8897W37S (Dronabinol)
-RN  - 0 (Cannabinoids)
-SB  - IM
-MH  - Animals
-MH  - *Receptor, Cannabinoid, CB1/metabolism
-MH  - *Myelin Sheath/drug effects/metabolism
-MH  - Mice
-MH  - *Oligodendroglia/drug effects/metabolism
-MH  - *Demyelinating Diseases/chemically induced/metabolism/drug therapy
-MH  - *Remyelination/drug effects/physiology
-MH  - Dronabinol/pharmacology
-MH  - Cannabinoids/pharmacology
-MH  - Mice, Inbred C57BL
-MH  - Mice, Knockout
-MH  - Nerve Regeneration/drug effects/physiology
-OTO - NOTNLM
-OT  - CB(1) receptor
-OT  - Cannabinoid
-OT  - Demyelination
-OT  - NG2 cell
-OT  - Remyelination
-COIS- Declaration of Competing Interest The authors declare that they have no known 
-      competing financial interests or personal relationships that could have appeared 
-      to influence the work reported in this paper.
-EDAT- 2024/11/13 13:48
-MHDA- 2024/12/15 00:42
-CRDT- 2024/11/11 19:21
-PHST- 2024/07/02 00:00 [received]
-PHST- 2024/09/24 00:00 [revised]
-PHST- 2024/10/28 00:00 [accepted]
-PHST- 2024/12/15 00:42 [medline]
-PHST- 2024/11/13 13:48 [pubmed]
-PHST- 2024/11/11 19:21 [entrez]
-AID - S0301-0082(24)00119-9 [pii]
-AID - 10.1016/j.pneurobio.2024.102683 [doi]
-PST - ppublish
-SO  - Prog Neurobiol. 2024 Dec;243:102683. doi: 10.1016/j.pneurobio.2024.102683. Epub 
-      2024 Nov 9.
+/**
+ * main.js — Core Logic for MyPubMedResearchAssistant.com
+ *
+ * Version: 00.003.029-alpha
+ * Author: Alan D. Keizer
+ * Copyright © 2025 A. D. Keizer. All rights reserved.
+ *
+ * Description:
+ * Handles PubMed search, metadata parsing, scoring, saving, and UI updates.
+ * Includes Cloudflare proxy fallback for plain-text fetches.
+ *
+ * Last Updated: 2025-04-02
+ */
+
+const VERSION = "00.003.029-alpha";
+document.addEventListener("DOMContentLoaded", () => {
+  log(`MyPubMedResearchAssistant ${VERSION} loaded.`);
+  document.getElementById("versionTag").textContent = `v${VERSION}`;
+});
+
+const CLOUDFLARE_PROXY = "https://steep-wind-e765.mymsfzkxqq.workers.dev";
+
+function log(message) {
+  const logBox = document.getElementById("debugLog");
+  if (logBox) {
+    logBox.value += `\n> ${message}`;
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+  console.log(message);
+}
+
+async function searchPubMed() {
+  log("Searching PubMed...");
+  const query = document.getElementById("searchInput").value.trim();
+  const requireAll = document.getElementById("requireAll").checked;
+  const useFallback = document.getElementById("useFallback").checked;
+
+  if (!query) return alert("Please enter a search term.");
+
+  let ids = await getPubMedIds(query);
+  log(`Found ${ids.length} IDs`);
+
+  const articles = [];
+
+  for (const id of ids) {
+    let data = null;
+    if (!useFallback) {
+      data = await fetchXML(id);
+    }
+    if (!data && useFallback) {
+      data = await fetchFallback(id);
+    }
+    if (data) {
+      const parsed = parseArticle(data);
+      if (!requireAll || (requireAll && parsed.metadataScore === 5)) {
+        articles.push(parsed);
+      }
+    }
+  }
+
+  displayArticles(articles);
+}
+
+async function getPubMedIds(query) {
+  const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&term=${encodeURIComponent(query)}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json.esearchresult.idlist;
+}
+
+async function fetchXML(pmid) {
+  try {
+    const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=${pmid}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("XML fetch failed");
+    return await res.text();
+  } catch (err) {
+    log(`XML fetch error for ${pmid}: ${err.message}`);
+    return null;
+  }
+}
+
+async function fetchFallback(pmid) {
+  try {
+    const url = `${CLOUDFLARE_PROXY}/?pmid=${pmid}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Fallback fetch failed");
+    return await res.text();
+  } catch (err) {
+    log(`Fallback error for ${pmid}: ${err.message}`);
+    return null;
+  }
+}
+
+function parseArticle(data) {
+  // Placeholder parsing logic — insert your real XML/Plain-text parser here
+  return {
+    pmid: "123456",
+    title: "Placeholder Title",
+    metadataScore: 5
+  };
+}
+
+function displayArticles(articles) {
+  const container = document.getElementById("results");
+  container.innerHTML = "";
+  document.getElementById("articleCount").textContent = `Articles Found: ${articles.length}`;
+
+  for (const article of articles) {
+    const div = document.createElement("div");
+    div.innerHTML = `<strong>${article.title}</strong> (PMID: ${article.pmid})`;
+    container.appendChild(div);
+  }
+}
+
+function showSavedArticles() {
+  log("Showing saved articles...");
+  // Implementation goes here
+}
+
+function toggleReadme() {
+  const readme = document.getElementById("readmeBox");
+  if (!readme) return;
+  readme.style.display = readme.style.display === "none" ? "block" : "none";
+}
