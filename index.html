@@ -1,24 +1,28 @@
-<!-- 
-  index.html
-  My PubMed Research Assistant
-  Created by Alan D. Keizer
-  © 2025 Alan D. Keizer. All rights reserved.
-  Version: 00.003.028-alpha
-  Description:
-  A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
-  with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
-  Change Log:
-  - Added Cloudflare Worker proxy support to bypass browser fallback fetch blocks
-  - Improved XML parsing robustness and logging
-  - Footer version tag updated automatically
-  - GitHub Gist-based version control for testing and traceability
+<!--
+index.html
+
+MyPubMed.com
+
+Created by Alan D. Keizer
+© 2025 Alan D. Keizer. All rights reserved.
+
+Version: 00.003.029-alpha
+
+Description:
+A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
+with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
+
+Change Log:
+- Updated to MyPubMed.com in branding and footer
+- Bumped version number to v00.003.029-alpha
+- Preserved all previous layout and controls
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My PubMed Research Assistant</title>
+  <title>MyPubMed.com</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -166,7 +170,7 @@
 <body>
 
 <header>
-  <h1>My PubMed Research Assistant</h1>
+  <h1>MyPubMed.com</h1>
   <p>Your fast, AI-ready tool for exploring medical research!</p>
 </header>
 
@@ -176,9 +180,11 @@
     <button onclick="searchPubMed()">Search</button>
     <button onclick="showSavedArticles()">View Saved Articles</button>
     <button onclick="toggleReadme()">Show README</button>
+
     <label style="margin-left: 15px;">
       <input type="checkbox" id="filterStrict"> Require All Metadata
     </label>
+
     <label style="margin-left: 15px;">
       <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
     </label>
@@ -222,11 +228,9 @@
 </main>
 
 <footer>
-  &copy; 2025 MyPubMedResearchAssistant.com <strong>v00.003.028-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed.com <strong>v00.003.029-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
-<!-- Main logic split out -->
 <script src="main.js" onerror="document.getElementById('debugPanel').innerHTML += '\n[ERROR] main.js failed to load. Check file path or hosting config.';"></script>
-
 </body>
 </html>
