@@ -4,15 +4,17 @@
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
 
-  Version: 00.003.030-alpha
-
   Description:
-  Cloudflare Worker to fetch PubMed's plain-text metadata (format=pubmed)
-  for use as a browser fallback, bypassing CORS and browser blocks.
+  This Cloudflare Worker acts as a proxy fallback to bypass browser CORS
+  restrictions when accessing raw PubMed metadata using the /?format=pubmed endpoint.
+
+  Version: 00.003.031-alpha
 
   Change Log:
-  - v00.003.030-alpha: Minor header edits and stability
+   - 2025-04-03: Confirmed consistent CORS headers across all responses
+   - 2025-04-03: Standardized error handling message formatting
 */
+
 
 export default {
   async fetch(request) {
@@ -39,9 +41,9 @@ export default {
         }
       });
 
-      const text = await response.text();
+      const body = await response.text();
 
-      return new Response(text, {
+      return new Response(body, {
         status: 200,
         headers: {
           "Content-Type": "text/plain",

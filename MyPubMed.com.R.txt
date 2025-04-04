@@ -8,12 +8,12 @@
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
   with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
 
-  Version: 00.003.029-alpha
+  Version: 00.003.031-alpha
 
   Change Log:
-   - Updated to MyPubMed.com in branding and footer
-   - Bumped version number to v00.003.029-alpha
-   - Added dynamic versionTag span to footer
+   - Restored all five required fields to visible results
+   - Re-enabled return key to trigger search
+   - Restored README metadata spec in header
 -->
 
 <!DOCTYPE html>
@@ -165,6 +165,33 @@
     }
   </style>
 </head>
+
+
+    #debugPanel {
+      white-space: pre-wrap;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #333;
+      margin-top: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
 <body>
 
 <header>
@@ -182,7 +209,6 @@
     <label style="margin-left: 15px;">
       <input type="checkbox" id="filterStrict"> Require All Metadata
     </label>
-
     <label style="margin-left: 15px;">
       <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
     </label>
@@ -192,44 +218,45 @@
   <div id="results">Ready.</div>
   <div id="debugPanel"><strong>Debug Log:</strong><br><pre>(standby... initializing)</pre></div>
 
-  <div id="readme" style="display:none;">
-    <h2>README: Attribute Reference Table</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
-        <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
-        <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
-        <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
-        <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
-        <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
-        <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
-        <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
-        <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
-        <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
-        <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
-        <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
-        <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
-        <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
-        <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
-        <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
-        <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
-        <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
-        <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
-      </tbody>
-    </table>
-  </div>
+<div id="readme" style="display:none;">
+  <h2>README: Attribute Reference Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
+      <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
+      <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
+      <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+      <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+      <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
+      <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
+      <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
+      <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
+      <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
+      <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+      <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+      <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
+      <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
+      <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+      <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
+      <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
+      <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+      <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
+    </tbody>
+  </table>
+</div>
+
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed.com <strong id="versionTag">v00.003.029-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed.com <strong id="versionTag">v00.003.031-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
-<script src="main.js" onerror="document.getElementById('debugPanel').innerHTML += '\n[ERROR] main.js failed to load. Check file path or hosting config.';"></script>
+<script src="main.js"></script>
 </body>
 </html>
 
@@ -237,156 +264,153 @@
 
 /**
  * main.js — Core Logic for MyPubMed.com
- * 
+ *
  * Author: Alan D. Keizer
  * © 2025 Alan D. Keizer. All rights reserved.
  *
  * Description:
  * Handles all PubMed API interactions, article parsing, metadata scoring,
- * localStorage caching, and UI interactivity. Includes support for
- * Cloudflare fallback proxy when direct fetch is blocked.
+ * localStorage caching, and UI interactivity. Supports fallback proxy.
  *
- * Version: 00.003.030-alpha
+ * Version: 00.003.031-alpha
  *
  * Change Log:
- *  - 2025-04-03: Patch for fallback-mode rendering (was displaying undefined/0)
- *  - 2025-04-03: Footer versionTag ID added to update version number dynamically
+ *  - 2025-04-03: Restores full article data fields in display
+ *  - 2025-04-03: Return key triggers search
  */
 
-
 (() => {
-  const VERSION = '00.003.030-alpha';
+  const VERSION = '00.003.031-alpha';
 
   document.addEventListener("DOMContentLoaded", () => {
     const tag = document.getElementById("versionTag");
     if (tag) tag.textContent = `v${VERSION}`;
+
+    const input = document.getElementById("searchInput");
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchPubMed();
+      }
+    });
   });
 
   async function searchPubMed() {
     const query = document.getElementById("searchInput").value.trim();
     const requireAll = document.getElementById("filterStrict")?.checked;
     const useFallback = document.getElementById("fallbackPlain")?.checked;
-    if (!query) return;
 
     logDebug(`> Searching PubMed for: ${query}`);
+    if (!query) return;
 
-    const results = [];
     try {
-      const res = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(query)}&retmode=json&retmax=40`);
-      const json = await res.json();
-      const ids = json.esearchresult.idlist;
-      logDebug(`> Found ${ids.length} IDs`);
+      const esearchURL = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(query)}&retmode=json&retmax=40`;
+      const searchRes = await fetch(esearchURL).then(r => r.json());
+      const idList = searchRes.esearchresult.idlist;
 
-      for (const pmid of ids) {
+      logDebug(`> Found ${idList.length} IDs`);
+      const results = [];
+
+      for (const pmid of idList) {
+        let data;
         try {
-          let article = useFallback
-            ? await fetchFallback(pmid)
-            : await fetchAndParseXML(pmid);
-          if (!article) continue;
+          if (useFallback) {
+            const proxyURL = `https://steep-wind-e765.mymsfzkxqq.workers.dev/?pmid=${pmid}`;
+            const text = await fetch(proxyURL).then(r => r.text());
+            data = { pmid, title: "(fetched via fallback)", abstract: text, authors: "", journal: "", pubDate: "" };
+            logDebug(`> Fetching: ${pmid} (fallback)`);
+          } else {
+            const efetchURL = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+            const xml = await fetch(efetchURL).then(r => r.text());
+            data = parseXMLMetadata(xml);
+            logDebug(`> Fetching: ${pmid} (xml)`);
+          }
 
-          article.score = scoreMetadata(article);
-          if (!requireAll || article.score === 5) results.push(article);
-        } catch (err) {
-          logDebug(`> Error fetching ${pmid}: ${err.message}`);
+          if (data) {
+            const score = scoreMetadata(data);
+            if (!requireAll || score === 5) results.push({ ...data, score });
+          }
+
+        } catch (e) {
+          logDebug(`> Error fetching ${pmid}: ${e.message}`);
         }
       }
 
       displayResults(results);
-    } catch (err) {
-      logDebug(`[ERROR] ${err.message}`);
+    } catch (e) {
+      logDebug(`[ERROR] ${e.message}`);
     }
   }
 
-  async function fetchAndParseXML(pmid) {
-    const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
-    const xml = await fetch(url).then(r => r.text());
-    return parseXML(xml);
-  }
+  function parseXMLMetadata(xml) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xml, "text/xml");
 
-  async function fetchFallback(pmid) {
-    const url = `https://steep-wind-e765.mymsfzkxqq.workers.dev/?pmid=${pmid}`;
-    const txt = await fetch(url).then(r => r.text());
-
-    const title = txt.match(/^TI\s+-\s+(.*)$/m)?.[1];
-    const journal = txt.match(/^JT\s+-\s+(.*)$/m)?.[1];
-    const date = txt.match(/^DP\s+-\s+(.*)$/m)?.[1];
-    const pmidMatch = txt.match(/^PMID-\s+(.*)$/m);
-    const authors = (txt.match(/^FAU\s+-\s+(.*)$/gm) || []).map(line => line.replace("FAU - ", "")).join(", ");
-
-    return {
-      pmid: pmidMatch?.[1],
-      title,
-      journal,
-      pubDate: date,
-      authors,
-    };
-  }
-
-  function parseXML(xml) {
-    const doc = new DOMParser().parseFromString(xml, "text/xml");
-    const get = (selector) => doc.querySelector(selector)?.textContent || "";
+    const pmid = doc.querySelector("PMID")?.textContent;
+    const title = doc.querySelector("ArticleTitle")?.textContent;
     const authors = Array.from(doc.querySelectorAll("Author")).map(a => {
-      const f = a.querySelector("ForeName")?.textContent || "";
-      const l = a.querySelector("LastName")?.textContent || "";
-      return `${f} ${l}`.trim();
+      const last = a.querySelector("LastName")?.textContent;
+      const fore = a.querySelector("ForeName")?.textContent;
+      return `${fore} ${last}`;
     }).join(", ");
-    return {
-      pmid: get("PMID"),
-      title: get("ArticleTitle"),
-      authors,
-      journal: get("Journal > Title"),
-      pubDate: get("PubDate"),
-    };
+    const journal = doc.querySelector("Journal > Title")?.textContent;
+    const pubDate = doc.querySelector("PubDate")?.textContent || "";
+    const abstract = doc.querySelector("Abstract > AbstractText")?.textContent;
+
+    return { pmid, title, authors, journal, pubDate, abstract };
   }
 
   function scoreMetadata(article) {
-    const fields = ['pmid', 'title', 'authors', 'journal', 'pubDate'];
-    return fields.reduce((s, k) => s + (article[k] ? 1 : 0), 0);
+    const required = ['pmid', 'title', 'authors', 'journal', 'pubDate'];
+    const missing = required.filter(k => !article[k]);
+    return 5 - missing.length;
   }
 
-  function displayResults(results) {
-    const out = document.getElementById("results");
+  function displayResults(articles) {
+    const container = document.getElementById("results");
     const count = document.getElementById("results-count");
-    count.textContent = `Articles Found: ${results.length}`;
-    out.innerHTML = "";
 
-    for (const a of results) {
+    count.textContent = `Articles Found: ${articles.length}`;
+    container.innerHTML = "";
+
+    for (const article of articles) {
       const div = document.createElement("div");
       div.className = "result";
       div.innerHTML = `
-        <p class="label">Title:</p><p>${a.title || "—"}</p>
-        <p class="label">Authors:</p><p>${a.authors || "—"}</p>
-        <p class="label">Journal:</p><p>${a.journal || "—"} (${a.pubDate || "—"})</p>
-        <p class="label">Metadata Score:</p><p>${a.score}/5</p>
-        <p><a href="https://pubmed.ncbi.nlm.nih.gov/${a.pmid}" target="_blank">View on PubMed</a></p>
-        <button class="save-button" onclick="saveArticle('${a.pmid}')">Save Article</button>
+        <p class="label">Title:</p><p>${article.title}</p>
+        <p class="label">Abstract:</p><p>${article.abstract}</p>
+        <p class="label">Authors:</p><p>${article.authors}</p>
+        <p class="label">Journal:</p><p>${article.journal} (${article.pubDate})</p>
+        <p class="label">PMID:</p><p>${article.pmid}</p>
+        <p class="label">Metadata Score:</p><p>${article.score}/5</p>
+        <p><a href="https://pubmed.ncbi.nlm.nih.gov/${article.pmid}/" target="_blank">View on PubMed</a></p>
+        <button class="save-button" onclick="saveArticle('${article.pmid}')">Save Article</button>
       `;
-      out.appendChild(div);
-    }
-
-    if (results.length === 0) {
-      out.innerHTML = "<p>No articles matched.</p>";
+      container.appendChild(div);
     }
   }
 
   function logDebug(msg) {
-    const box = document.getElementById("debugPanel").querySelector("pre");
-    box.textContent += `\n${msg}`;
+    const panel = document.getElementById("debugPanel")?.querySelector("pre");
+    if (panel) panel.textContent += `\n${msg}`;
   }
 
   window.searchPubMed = searchPubMed;
+
   window.toggleReadme = () => {
     const r = document.getElementById("readme");
     r.style.display = r.style.display === "none" ? "block" : "none";
   };
+
   window.showSavedArticles = () => {
     const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
     displayResults(saved);
-    logDebug(`> Showing ${saved.length} saved articles`);
+    logDebug(`> Loaded saved articles (${saved.length})`);
   };
+
   window.saveArticle = async (pmid) => {
-    const xml = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`).then(r => r.text());
-    const article = parseXML(xml);
+    const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+    const xml = await fetch(url).then(r => r.text());
+    const article = parseXMLMetadata(xml);
     const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
     saved.push(article);
     localStorage.setItem("savedArticles", JSON.stringify(saved));
@@ -398,25 +422,22 @@
 
 
 /*
-  fallback-worker.js
-  MyPubMed.com
+  fallback-worker.js - For MyPubMed.com
   
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
 
   Description:
-  This Cloudflare Worker serves as a proxy fallback to bypass browser CORS
-  restrictions when accessing raw PubMed metadata using the `/?format=pubmed` endpoint.
-  The client can request this endpoint with a `?pmid=` parameter, and the worker
-  will fetch the metadata from `https://pubmed.ncbi.nlm.nih.gov/PMID/?format=pubmed`.
-  
-  Version: 00.003.029-alpha
-  
+  This Cloudflare Worker acts as a proxy fallback to bypass browser CORS
+  restrictions when accessing raw PubMed metadata using the /?format=pubmed endpoint.
+
+  Version: 00.003.031-alpha
+
   Change Log:
-  - Initial deployment of plain-text metadata proxy
-  - Adds required CORS headers for browser access
-  - Error handling for missing PMIDs and fetch failures
+   - 2025-04-03: Confirmed consistent CORS headers across all responses
+   - 2025-04-03: Standardized error handling message formatting
 */
+
 
 export default {
   async fetch(request) {

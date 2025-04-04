@@ -8,12 +8,12 @@
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
   with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
 
-  Version: 00.003.030-alpha
+  Version: 00.003.031-alpha
 
   Change Log:
-   - Fixed versionTag bug
-   - Verified Save/View Article buttons
-   - Applied fallback parsing fix
+   - Restored all five required fields to visible results
+   - Re-enabled return key to trigger search
+   - Restored README metadata spec in header
 -->
 
 <!DOCTYPE html>
@@ -165,6 +165,33 @@
     }
   </style>
 </head>
+
+
+    #debugPanel {
+      white-space: pre-wrap;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #333;
+      margin-top: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
 <body>
 
 <header>
@@ -182,7 +209,6 @@
     <label style="margin-left: 15px;">
       <input type="checkbox" id="filterStrict"> Require All Metadata
     </label>
-
     <label style="margin-left: 15px;">
       <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
     </label>
@@ -192,41 +218,42 @@
   <div id="results">Ready.</div>
   <div id="debugPanel"><strong>Debug Log:</strong><br><pre>(standby... initializing)</pre></div>
 
-  <div id="readme" style="display:none;">
-    <h2>README: Attribute Reference Table</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
-        <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
-        <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
-        <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
-        <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
-        <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
-        <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
-        <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
-        <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
-        <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
-        <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
-        <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
-        <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
-        <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
-        <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
-        <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
-        <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
-        <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
-        <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
-      </tbody>
-    </table>
-  </div>
+<div id="readme" style="display:none;">
+  <h2>README: Attribute Reference Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
+      <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
+      <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
+      <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+      <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+      <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
+      <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
+      <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
+      <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
+      <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
+      <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+      <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+      <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
+      <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
+      <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+      <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
+      <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
+      <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+      <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
+    </tbody>
+  </table>
+</div>
+
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed.com <strong id="versionTag">v...</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed.com <strong id="versionTag">v00.003.031-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
 <script src="main.js"></script>
