@@ -1,38 +1,107 @@
+vnn.nnn.nnn-alpha Test Procedure:
 
-Test v3.027 Results for Myelin THC:
+Instructions:
 
-	0. Page loads before search:
+  A. The search tearm is "Myelin THC" for each search.
 
-		<>
+  B. Before each "Click Search", enter the search term and follow the instructions.
 
-	1. Click Search with no check boxes:
 
-		<>
+Test Results:
 
-	2. Click search with Require All Metadata checked:
-
-		<>
-
-	3. Click Search with Use Plain-Text Fallback checked:
-
-		<>
-
-	4. Click Search with both checked:
-
-		<>
-
-	5. Clicked “Show README”:
-
-		<>
-
-	6. Clicked Save Article (PMID 39528076):
-
-		<>
-	
-	7. Clicked on View Saved Articles:
-
-		<>
-
-	8. Clicked Remove from Saved (39528076):
-
-		<>
+   Open www.mypubmed.com:                                          
+                                                                   
+   	0. Page loads before search:                                   
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+   	1. Click Search with no check boxes:                           
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	2. Click search with Require All Metadata checked:             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	3. Click Search with Use Plain-Text Fallback checked:          
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	4. Click Search with both checked:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	5. Clicked “Show README”:                                      
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	6. Clicked Save Article (PMID 39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	7. Clicked on View Saved Articles:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	8. Clicked Remove from Saved (39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
