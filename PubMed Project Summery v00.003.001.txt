@@ -1,0 +1,517 @@
+Project Title:
+MyPubMed — NIH Research Simplified
+
+Version:
+v00.003.001
+Last updated: 2025-04-04
+Authored by: Alan D. Keizer
+
+
+Project Summary:
+
+I want to create a ap on multiple platforms that will allow the user to search the NIH PubMed database (https://pubmed.ncbi.nlm.nih.gov) for research articles.  The purpose of this app is to give the layman the ability to search for research articles and read the results in terms and languages that they understand.  The app will allow the user to translate and store the articles in PDF and web format so that the user can share the information with others via email and Safari in multiple languages.  We are trying to make it easy for the average user to find and understand peer reviewed medical research made available by the NIH.
+
+Key Features:
+
+1. The user should be able to enter multiple search terms. 
+2. The default search term will be “Myelin THC” while we are doing development testing.  This search results in 38 articles found, which is manageable for testing.  This default will be removed before the app is released.
+3. The application will list the PMID number, Title, Abstract, web link of each article found, and allow the user to select individual articles to view the PMID number, Title, Abstract, web link. 
+4. PubMed article web links are constructed by appending the PMID to the end of the following URL: https://pubmed.ncbi.nlm.nih.gov/.  So if the PMID is 3952806, then the web link will be: https://pubmed.ncbi.nlm.nih.gov/39528076
+5. The raw data of each article that the user discovered during a search will be stored locally on the device for future offline reference via the app.
+6. The app will give the user the option of using AI to convert the Abstract to general layman terms in the following languages; US English, UK English, French, Mexican Spanish, German, and Farsi.
+7. The app will store a copy all translated and original articles with the PMID number, Title, Abstract, web link. 
+8. The user must be able to view both the original Abstract and the "Layman Abstract" at the same time.  The app will display the PMID Number, Title (Translated to language the user selected), Title (Original), Abstract (Translated to language the user selected), Abstract (Original).
+9. The user must be able to create and store a PDF file of the original Abstract and the "Layman Abstract" at the same time.  The app will save the PMID Number, Title (Translated to language the user selected), Title (Original), Abstract (Translated to language the user selected), Abstract (Original), and web link.
+10. The background color will be white (#FFFFFF).  The text color US Flag blue (#3C3B6E).  Other elements will be US Flag red (#B22234).
+11. All text fonts will be Arial.
+12. All text sizes will be 9 and 12 point.
+13. Bold will be used for titles.
+14. All .swift code must be verbosely commented for novice swift developers by the AI Chatbot.
+15. The AI Chatbot will maintain and track comments and version number using SemVer (Major.Minor.Patch) development stages (Alpha, Beta, Release Candidate (RC), and Post-Release fixes).
+16. The AI Chatbot will instruct the developer as to what to do whenever version changes need to be committed.
+17. Initial testing will search for the term “Myelin THC”.  This will result in 38 articles found with the following PMID numbers:
+18. The app will display all relevant identification numbers about each article.  The most common identifiers are:
+
+
+* PMID (PubMed Identifier): A unique number assigned to each article indexed in PubMed. Helps in quickly finding specific articles within the database.
+* DOI (Digital Object Identifier): An alphanumeric string assigned to digital content like journal articles. Provides a persistent link to the content online.
+* PMCID (PubMed Central Identifier): A unique number for articles archived in PubMed Central. Required for NIH-funded research compliance.
+* NIHMSID (NIH Manuscript Submission Identifier): A temporary identifier for manuscripts submitted to the NIH Manuscript Submission system until they receive a PMCID.
+* ISSN (International Standard Serial Number): An eight-digit code used to uniquely identify periodical publications like journals.
+* ISBN (International Standard Book Number): A unique identifier for books and other non-serial publications.
+
+These identifiers ensure that various types of biomedical literature are easily managed and tracked.
+
+19.  All web links for each article will be displayed and clickable for the user.
+20. The following attributes about each article will be recorded and displayed for the user.  Optional attributes are attributes that any specific article may have:
+
+//  Attribute Name          Type      Optional        Notes
+//  -----------------------+---------+---------------+-----------------------------------------------
+//  abstract                String    Yes             Abstract text
+//  affiliations            String    Yes             Author affiliations
+//  authors                 String    No              List of authors (comma-separated)
+//  conflictOfInterest      String    Yes             Conflict of interest statement
+//  dateSaved               Date      Yes             When article was saved
+//  doi                     String    Yes             Digital Object Identifier
+//  fullTextAvailable       Boolean   Yes             True/False flag
+//  funding                 String    Yes             Funding sources
+//  issue                   String    Yes             Issue number
+//  journal                 String    No              Journal name
+//  keywords                String    Yes             Keywords (comma-separated)
+//  meSHterms               String    Yes             Medical Subject Headings (comma-separated)
+//  pages                   String    Yes             Page numbers
+//  pmcid                   String    Yes             Optional identifier
+//  pmid                    String    No              Primary identifier
+//  pubDate                 Date      No              Publication date
+//  title                   String    No              Article title
+//  volume                  String    Yes             Volume number
+//  webLink                 String    Yes             Link to article
+
+Software Development Environment:
+
+	Hardware & Software: 
+The 
+		2018 Mac mini: 
+			Processor				3.2 GHz 6 -Core Intel Cor i7
+			Graphics				Intel UHD Graphics 630 1536 MB
+			Memory				32 GB 2667
+			macOS					Version 15.4 (24E248)
+
+			Software:
+			Safari					Version 18.4 (20621.1.15.11.10)
+			Xcode					Version 16.3 (16E140)
+			Simulator				Version Version 16.0 (1042.1)
+			Visual Studio Code	 	Version: 1.98.2
+			Android Studio			Version 2024.3.1 Patch 1
+			GitHub Desktop			Version 3.4.18 (x64)
+			Textastic				Version 6.0.2 (47)
+			UltraEdit				Version 2023.0.0.22
+			UltraCompare			Version 2024.0.0.19
+			BeyondCompare		Version 5.0.6 (build 30713)
+			Firefox					Version 136.0.4 (64-bit)
+			Opera					Version 117.0.5408
+			Parallels Desktop		Version 20.2.2 (55879)
+
+		iPad Pro (12.9-inch) (4th generation):
+			Model Number			MXAT2LL/A
+	              iPadOS					Version 18..4 (22E240)
+
+			Software:
+			ChatGTP				Version 1.2025.084
+
+		iPhone 15 Pro Max:
+			Model Number 			MU6H3LL/A
+			iOS						Version 18..4 (22E240)
+
+		Web Based Applications and Services:
+			GitHub:					https://github.com
+				Repositories:
+					iOS				https://github.com/GrimNoirKnight/My-PubMed-Research-Assistant
+					HTML			https://github.com/GrimNoirKnight/-mypubmed-web
+
+			CloudFlare:				https://www.cloudflare.com
+				Domains Managed:
+									mypubmed.com (Main)
+									mypubmedra.com
+									mypubmedresearchassistant.com
+		Web Host for MyPubMed:
+			Netlify:					https://www.netlify.com
+				mypubmed.com	:	https://app.netlify.com/sites/mypubmed/overview
+
+
+Swift Source Code:
+
+	Publicly available:
+
+		iOS: 						https://github.com/GrimNoirKnight/My-PubMed-Research-Assistant
+		HTML:						https://github.com/GrimNoirKnight/-mypubmed-web
+
+
+
+Test Articles — “Myelin THC”
+
+A search from within PubMed (https://pubmed.ncbi.nlm.nih.gov/) 
+
+Used for regression testing, each entry is retrievable via its unique URL. These URLs are supported by both:
+	•	NIH XML (efetch)
+	•	Plain-text fallback: /?format=pubmed
+	
+Here are the 38 article URLs with their format=pubmed endpoints:
+
+PMID: 39528076  
+https://pubmed.ncbi.nlm.nih.gov/39528076/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/39528076/?format=pubmed
+
+
+PMID: 38778343  
+https://pubmed.ncbi.nlm.nih.gov/38778343/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/38778343/?format=pubmed
+
+PMID: 38335658  
+https://pubmed.ncbi.nlm.nih.gov/38335658/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/38335658/?format=pubmed
+
+PMID: 38190273  
+https://pubmed.ncbi.nlm.nih.gov/38190273/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/38190273/?format=pubmed
+
+PMID: 36711651  
+https://pubmed.ncbi.nlm.nih.gov/36711651/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/36711651/?format=pubmed
+
+PMID: 34678230  
+https://pubmed.ncbi.nlm.nih.gov/34678230/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/34678230/?format=pubmed
+
+PMID: 34216154  
+https://pubmed.ncbi.nlm.nih.gov/34216154/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/34216154/?format=pubmed
+
+PMID: 33815353  
+https://pubmed.ncbi.nlm.nih.gov/33815353/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/33815353/?format=pubmed
+
+PMID: 33298334  
+https://pubmed.ncbi.nlm.nih.gov/33298334/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/33298334/?format=pubmed
+
+PMID: 32956517  
+https://pubmed.ncbi.nlm.nih.gov/32956517/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/32956517/?format=pubmed
+
+PMID: 32690657  
+https://pubmed.ncbi.nlm.nih.gov/32690657/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/32690657/?format=pubmed
+
+PMID: 32497151  
+https://pubmed.ncbi.nlm.nih.gov/32497151/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/32497151/?format=pubmed
+
+PMID: 30529211  
+https://pubmed.ncbi.nlm.nih.gov/30529211/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/30529211/?format=pubmed
+
+PMID: 30291491  
+https://pubmed.ncbi.nlm.nih.gov/30291491/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/30291491/?format=pubmed
+
+PMID: 25857324  
+https://pubmed.ncbi.nlm.nih.gov/25857324/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/25857324/?format=pubmed
+
+PMID: 24139960  
+https://pubmed.ncbi.nlm.nih.gov/24139960/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/24139960/?format=pubmed
+
+PMID: 24036373  
+https://pubmed.ncbi.nlm.nih.gov/24036373/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/24036373/?format=pubmed
+
+PMID: 23892791  
+https://pubmed.ncbi.nlm.nih.gov/23892791/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/23892791/?format=pubmed
+
+PMID: 21480865  
+https://pubmed.ncbi.nlm.nih.gov/21480865/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/21480865/?format=pubmed
+
+PMID: 21449853  
+https://pubmed.ncbi.nlm.nih.gov/21449853/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/21449853/?format=pubmed
+
+PMID: 19591937  
+https://pubmed.ncbi.nlm.nih.gov/19591937/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/19591937/?format=pubmed
+
+PMID: 18037503  
+https://pubmed.ncbi.nlm.nih.gov/18037503/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/18037503/?format=pubmed
+
+PMID: 17320842
+https://pubmed.ncbi.nlm.nih.gov/17320842/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/17320842/?format=pubmed
+
+PMID: 15389382  
+https://pubmed.ncbi.nlm.nih.gov/15389382/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/15389382/?format=pubmed
+
+PMID: 12697742  
+https://pubmed.ncbi.nlm.nih.gov/12697742/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/12697742/?format=pubmed
+
+PMID: 12535983  
+https://pubmed.ncbi.nlm.nih.gov/12535983/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/12535983/?format=pubmed
+
+PMID: 12505705  
+https://pubmed.ncbi.nlm.nih.gov/12505705/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/12505705/?format=pubmed
+
+PMID: 11015613  
+https://pubmed.ncbi.nlm.nih.gov/11015613/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/11015613/?format=pubmed
+
+PMID: 8387304  
+https://pubmed.ncbi.nlm.nih.gov/8387304/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/8387304/?format=pubmed
+
+PMID: 8388853  
+https://pubmed.ncbi.nlm.nih.gov/8388853/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/8388853/?format=pubmed
+
+PMID: 2450171  
+https://pubmed.ncbi.nlm.nih.gov/2450171/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/2450171/?format=pubmed
+
+PMID: 3024047  
+https://pubmed.ncbi.nlm.nih.gov/3024047/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/3024047/?format=pubmed
+
+PMID: 310454  
+https://pubmed.ncbi.nlm.nih.gov/310454/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/310454/?format=pubmed
+
+PMID: 1005913  
+https://pubmed.ncbi.nlm.nih.gov/1005913/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/1005913/?format=pubmed
+
+PMID: 965964  
+https://pubmed.ncbi.nlm.nih.gov/965964/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/965964/?format=pubmed
+
+PMID: 1113115  
+https://pubmed.ncbi.nlm.nih.gov/1113115/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/1113115/?format=pubmed
+
+PMID: 4824510  
+https://pubmed.ncbi.nlm.nih.gov/4824510/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/4824510/?format=pubmed
+
+PMID: 4695669  
+https://pubmed.ncbi.nlm.nih.gov/4695669/?format=pmid
+https://pubmed.ncbi.nlm.nih.gov/4695669/?format=pubmed
+
+
+HTML Test procedures:
+
+Alpha Version Tests:
+
+vnn.nnn.nnn-alpha Test Procedure:
+
+Instructions:
+
+  A. The search tearm is "Myelin THC" for each search.
+
+  B. Before each "Click Search", enter the search term and follow the instructions.
+
+
+Test Results:
+
+   Open www.mypubmed.com:                                          
+                                                                   
+   	0. Page loads before search:                                   
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+   	1. Click Search with no check boxes:                           
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	2. Click search with Require All Metadata checked:             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	3. Click Search with Use Plain-Text Fallback checked:          
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	4. Click Search with both checked:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	5. Clicked “Show README”:                                      
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	6. Clicked Save Article (PMID 39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	7. Clicked on View Saved Articles:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	8. Clicked Remove from Saved (39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+
+
+
+Beta Version Tests:
+
+vnn.nnn.nnn-beta Test Procedure:
+
+Instructions:
+
+  A. The search tearm is "Myelin THC" for each search.
+
+  B. Before each "Click Search", enter the search term and follow the instructions.
+
+
+Test Results:
+
+   Open www.mypubmed.com:                                          
+                                                                   
+   	0. Page loads before search:                                   
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+   	1. Click Search with no check boxes:                           
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	2. Click search with Require All Metadata checked:             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	3. Click Search with Use Plain-Text Fallback checked:          
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	4. Click Search with both checked:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	5. Clicked “Show README”:                                      
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	6. Clicked Save Article (PMID 39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	7. Clicked on View Saved Articles:                             
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+   	8. Clicked Remove from Saved (39528076):                       
+                                                                   
+   Result:                                                         
+                                                                   
+                                                                   
+                                                                   
+   Notes:                                                          
