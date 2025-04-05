@@ -151,5 +151,4 @@
     saved.push(article);
     localStorage.setItem("savedArticles", JSON.stringify(saved));
     logDebug(`> Saved article ${pmid}`);
-  };
-})();
+  

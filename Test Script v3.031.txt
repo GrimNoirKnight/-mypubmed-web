@@ -1,0 +1,343 @@
+v00.003.031-alpha Test Procedure:
+
+Instructions:
+
+  A. The search tearm is "Myelin THC" for each search.
+
+  B. Before each "Click Search", enter the search term and follow the instructions.
+
+
+Begin Test:
+
+   Open www.mypubmed.com:
+
+   	  0. Page loads before search:
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+         Notes:  
+
+This appeared above the header
+
+   	  1. Click Search with no check boxes:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Articles Found: 14
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (xml)
+> Fetching: 38778343 (xml)
+> Error fetching 38335658: Load failed
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Fetching: 34678230 (xml)
+> Fetching: 34216154 (xml)
+> Error fetching 33815353: Load failed
+> Fetching: 33298334 (xml)
+> Error fetching 32956517: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 32497151: Load failed
+> Fetching: 30529211 (xml)
+> Error fetching 30291491: Load failed
+> Fetching: 25857324 (xml)
+> Error fetching 24139960: Load failed
+> Fetching: 24036373 (xml)
+> Error fetching 23892791: Load failed
+> Error fetching 21480865: Load failed
+> Error fetching 21449853: Load failed
+> Error fetching 19591937: Load failed
+> Fetching: 18037503 (xml)
+> Error fetching 17320842: Load failed
+> Fetching: 15389382 (xml)
+> Error fetching 12697742: Load failed
+> Fetching: 12535983 (xml)
+> Error fetching 12505705: Load failed
+> Error fetching 11015613: Load failed
+> Error fetching 8387304: Load failed
+> Error fetching 8388853: Load failed
+> Fetching: 2450171 (xml)
+> Error fetching 3024047: Load failed
+> Fetching: 310454 (xml)
+> Error fetching 1005913: Load failed
+> Fetching: 965964 (xml)
+> Error fetching 1113115: Load failed
+> Error fetching 4824510: Load failed
+> Error fetching 4695669: Load failed
+
+         Notes:  
+
+Still varies the number found.
+
+
+   	  2. Click search with Require All Metadata checked:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Articles Found: 18
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (xml)
+> Fetching: 38778343 (xml)
+> Fetching: 38335658 (xml)
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Error fetching 34678230: Load failed
+> Fetching: 34216154 (xml)
+> Fetching: 33815353 (xml)
+> Fetching: 33298334 (xml)
+> Error fetching 32956517: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 32497151: Load failed
+> Fetching: 30529211 (xml)
+> Fetching: 30291491 (xml)
+> Fetching: 25857324 (xml)
+> Error fetching 24139960: Load failed
+> Fetching: 24036373 (xml)
+> Fetching: 23892791 (xml)
+> Error fetching 21480865: Load failed
+> Error fetching 21449853: Load failed
+> Error fetching 19591937: Load failed
+> Error fetching 18037503: Load failed
+> Error fetching 17320842: Load failed
+> Fetching: 15389382 (xml)
+> Error fetching 12697742: Load failed
+> Fetching: 12535983 (xml)
+> Fetching: 12505705 (xml)
+> Error fetching 11015613: Load failed
+> Error fetching 8387304: Load failed
+> Error fetching 8388853: Load failed
+> Error fetching 2450171: Load failed
+> Fetching: 3024047 (xml)
+> Fetching: 310454 (xml)
+> Fetching: 1005913 (xml)
+> Error fetching 965964: Load failed
+> Error fetching 1113115: Load failed
+> Error fetching 4824510: Load failed
+> Fetching: 4695669 (xml)
+
+         Notes:  
+
+Still varies the number found.
+
+
+   	  3. Click Search with Use Plain-Text Fallback checked:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Articles Found: 38
+Title:
+
+(fetched via fallback)
+
+Abstract:
+
+PMID- 39528076 OWN - NLM STAT- MEDLINE DCOM- 20241214 LR - 20241214 IS - 1873-5118 (Electronic) IS - 0301-0082 (Linking) VI - 243 DP - 2024 Dec TI - CB(1) receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration. PG - 102683 LID - S0301-0082(24)00119-9 [pii] LID - 10.1016/j.pneurobio.2024.102683 [doi] AB - Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB(1) receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB(1) receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB(1)-deficient mice. Overall, this study identifies CB(1) receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders. CI - Copyright © 2024 Elsevier Ltd. All rights reserved. FAU - Sánchez de la Torre, Aníbal AU - Sánchez de la Torre A AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain. FAU - Ezquerro-Herce, Sara AU - Ezquerro-Herce S AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain. FAU - Huerga-Gómez, Alba AU - Huerga-Gómez A AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain. FAU - Sánchez-Martín, Ester AU - Sánchez-Martín E AD - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; IIS Biobizkaia, Barakaldo 48903, Spain. FAU - Chara, Juan Carlos AU - Chara JC AD - Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas (CIBERNED), Madrid 28049, Spain. FAU - Matute, Carlos AU - Matute C AD - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas (CIBERNED), Madrid 28049, Spain. FAU - Monory, Krisztina AU - Monory K AD - Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 55128, Germany. FAU - Mato, Susana AU - Mato S AD - Department of Neurosciences, University of the Basque Country UPV/EHU, Leioa 48940, Spain; Achucarro Basque Center for Neuroscience, Leioa 48940, Spain; Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 55128, Germany. FAU - Lutz, Beat AU - Lutz B AD - Institute of Physiological Chemistry, University Medical Center Mainz, Mainz 55128, Germany. FAU - Guzmán, Manuel AU - Guzmán M AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas (CIBERNED), Madrid 28049, Spain. FAU - Aguado, Tania AU - Aguado T AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain. Electronic address: [email protected]. FAU - Palazuelos, Javier AU - Palazuelos J AD - Instituto Ramón y Cajal de Investigación Sanitaria (IRYCIS), Madrid 28034, Spain; Department of Biochemistry and Molecular Biology, Complutense University, Instituto Universitario de Investigación en Neuroquímica (IUIN), Madrid 28040, Spain; Centro de Investigación Biomédica en Red sobre Enfermedades Neurodegenerativas (CIBERNED), Madrid 28049, Spain. Electronic address: [email protected]. LA - eng PT - Journal Article DEP - 20241109 PL - England TA - Prog Neurobiol JT - Progress in neurobiology JID - 0370121 RN - 0 (Receptor, Cannabinoid, CB1) RN - 7J8897W37S (Dronabinol) RN - 0 (Cannabinoids) SB - IM MH - Animals MH - *Receptor, Cannabinoid, CB1/metabolism MH - *Myelin Sheath/drug effects/metabolism MH - Mice MH - *Oligodendroglia/drug effects/metabolism MH - *Demyelinating Diseases/chemically induced/metabolism/drug therapy MH - *Remyelination/drug effects/physiology MH - Dronabinol/pharmacology MH - Cannabinoids/pharmacology MH - Mice, Inbred C57BL MH - Mice, Knockout MH - Nerve Regeneration/drug effects/physiology OTO - NOTNLM OT - CB(1) receptor OT - Cannabinoid OT - Demyelination OT - NG2 cell OT - Remyelination COIS- Declaration of Competing Interest The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper. EDAT- 2024/11/13 13:48 MHDA- 2024/12/15 00:42 CRDT- 2024/11/11 19:21 PHST- 2024/07/02 00:00 [received] PHST- 2024/09/24 00:00 [revised] PHST- 2024/10/28 00:00 [accepted] PHST- 2024/12/15 00:42 [medline] PHST- 2024/11/13 13:48 [pubmed] PHST- 2024/11/11 19:21 [entrez] AID - S0301-0082(24)00119-9 [pii] AID - 10.1016/j.pneurobio.2024.102683 [doi] PST - ppublish SO - Prog Neurobiol. 2024 Dec;243:102683. doi: 10.1016/j.pneurobio.2024.102683. Epub 2024 Nov 9.
+
+Authors:
+
+Journal:
+
+()
+
+PMID:
+
+39528076
+
+Metadata Score:
+
+2/5
+
+View on PubMed
+
+Save Article
+
+
+         Notes:  
+
+This output format needs to be cleaned up.  The "Abstract" to me looks like the contents of https://pubmed.ncbi.nlm.nih.gov/39528076/?format=pubmed
+
+I recommend displaying it as this:
+
+PMID: 
+
+Meta Data: 
+
+
+   	  4. Click Search with both checked:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Articles Found: 0
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (fallback)
+> Fetching: 38778343 (fallback)
+> Fetching: 38335658 (fallback)
+> Fetching: 38190273 (fallback)
+> Fetching: 36711651 (fallback)
+> Fetching: 34678230 (fallback)
+> Fetching: 34216154 (fallback)
+> Fetching: 33815353 (fallback)
+> Fetching: 33298334 (fallback)
+> Fetching: 32956517 (fallback)
+> Fetching: 32690657 (fallback)
+> Fetching: 32497151 (fallback)
+> Fetching: 30529211 (fallback)
+> Fetching: 30291491 (fallback)
+> Fetching: 25857324 (fallback)
+> Fetching: 24139960 (fallback)
+> Fetching: 24036373 (fallback)
+> Fetching: 23892791 (fallback)
+> Fetching: 21480865 (fallback)
+> Fetching: 21449853 (fallback)
+> Fetching: 19591937 (fallback)
+> Fetching: 18037503 (fallback)
+> Fetching: 17320842 (fallback)
+> Fetching: 15389382 (fallback)
+> Fetching: 12697742 (fallback)
+> Fetching: 12535983 (fallback)
+> Fetching: 12505705 (fallback)
+> Fetching: 11015613 (fallback)
+> Fetching: 8387304 (fallback)
+> Fetching: 8388853 (fallback)
+> Fetching: 2450171 (fallback)
+> Fetching: 3024047 (fallback)
+> Fetching: 310454 (fallback)
+> Fetching: 1005913 (fallback)
+> Fetching: 965964 (fallback)
+> Fetching: 1113115 (fallback)
+> Fetching: 4824510 (fallback)
+> Fetching: 4695669 (fallback)
+
+         Notes:  
+
+Shouldn't these check boxes be toggled so that you can only select one or none?  Why would you want to select both?
+
+
+   	  5. Clicked “Show README”:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Ready.
+Debug Log:
+(standby... initializing)
+README: Attribute Reference Table
+
+Attribute Name	Type	Optional	Notes
+pmid	String	No	PubMed ID
+title	String	No	Article Title
+abstract	String	Yes	Abstract content
+affiliations	String	Yes	Author affiliations
+authors	String	No	Author list
+conflictOfInterest	String	Yes	COI disclosures
+dateSaved	Date	Yes	Save timestamp
+doi	String	Yes	Digital Object ID
+fullTextAvailable	Boolean	Yes	PMC open access?
+funding	String	Yes	Funding sources
+issue	String	Yes	Issue number
+journal	String	No	Journal name
+keywords	String	Yes	Publisher keywords
+meSHterms	String	Yes	Medical subject headings
+pages	String	Yes	Page range
+pmcid	String	Yes	PubMed Central ID
+pubDate	Date	No	Publication date
+volume	String	Yes	Volume number
+webLink	String	Yes	PubMed URL
+
+
+         Notes:  
+
+I want to add an Attributes that button that functions like the Show README button.  It will list all of the attributes found related to that article.
+
+
+   	  6. Clicked Save Article (PMID 39528076):  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+No response from the buttone
+
+         Notes:  
+
+Fix it.
+
+
+   	  7. Clicked on View Saved Articles:  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Articles Found: undefined
+
+Debug Log:
+(standby... initializing)
+
+         Notes:  
+
+
+
+
+   	  8. Clicked Remove from Saved (39528076):  
+
+         Result:  
+
+#debugPanel { white-space: pre-wrap; background: #f5f5f5; border: 1px solid #ccc; padding: 10px; font-size: 0.9em; color: #333; margin-top: 30px; } table { border-collapse: collapse; margin-top: 10px; } table, th, td { border: 1px solid #ccc; padding: 6px 10px; } th { background-color: #eee; }
+
+Could not test due to no saved articles.
+
+         Notes:  
+
+Fix it.
+
+
+
+Test Notes:
+
+The articles in the initial screen must display the following information, in the following order:
+
+Title
+Author(s)
+PMID, and DOI, PMCID, NIHMSID, ISSN, and ISBN if any of these are available.
+Abstract (If not available, then state so)
+PubDate
+Journal
+Metadata Score
+View on PubMed (link)
+Save Article or Remove Article button
+
+I am expecting these changes in 32.
+
+Also, please change:
+
+  MyPubMed.com
+  Your fast, AI-ready tool for exploring medical research!
+
+To:
+
+  MyPubMed
+  NIH Research Simplified
+
+You have a lot to fix.  See all of my notes.

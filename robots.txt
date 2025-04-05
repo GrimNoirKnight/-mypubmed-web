@@ -1,0 +1,3 @@
+# robots.txt for MyPubMed (Alpha/Beta)
+User-agent: *
+Disallow: /
