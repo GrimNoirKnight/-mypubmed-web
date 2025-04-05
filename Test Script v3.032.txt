@@ -1,4 +1,4 @@
-v00.003.000-alpha Test Procedure:
+v00.003.032-alpha Test Procedure:
 
 Instructions:
 
@@ -15,117 +15,125 @@ Begin Test:
 
          Result:  
 
+Ready.
 
+Debug Log:
+(standby... initializing)
 
          Notes:  
 
-
+Looks good.
 
    	  1. Click Search with no check boxes:  
 
          Result:  
 
-
+Search button does not work.
 
          Notes:  
 
-
+Fix it.
 
 
    	  2. Click search with Require All Metadata checked:  
 
          Result:  
 
-
+Search button does not work.
 
          Notes:  
 
-
+Fix it.
 
 
    	  3. Click Search with Use Plain-Text Fallback checked:  
 
          Result:  
 
-
+Search button does not work.
 
          Notes:  
 
-
+Fix it.
 
 
    	  4. Click Search with both checked:  
 
          Result:  
 
-
+Search button does not work.
 
          Notes:  
 
-
+Button toggle still has not yet been implimented.  Why?
 
 
    	  5. Clicked “Show README”:  
 
          Result:  
 
-
+Button does not work.
 
          Notes:  
 
-
+Fix it.
 
 
    	  6. Clicked Save Article (PMID 39528076):  
 
          Result:  
 
-
+Search button does not work.  Could not test.
 
          Notes:  
 
-
+Fix it
 
 
            6.1. Click on View on PubMed to view the article separately on the PubMed website.
 
                 Results:
 
-
+Search button does not work.  Could not test.
 
                 Notes:
 
+Fix it.
 
 
            6.2. Click on Save Article
 
                 Results:
 
+Search button does not work.  Could not test.
 
                 Notes:
 
-
+Fix it.
 
 
    	  7. Clicked on View Saved Articles:  
 
          Result:  
 
-
+Search button does not work.  Could not test.
 
          Notes:  
 
-
+Fix it.
 
 
    	  8. Clicked Remove from Saved (39528076):  
 
          Result:  
 
-
+Search button does not work.  Could not test.
 
          Notes:  
 
+Fix it.
 
 
+OTHER NOTES:
 
+Fix everything above.
