@@ -2,7 +2,7 @@ Project Title:
 MyPubMed — NIH Research Simplified
 
 Version:
-v00.003.001
+v00.003.032
 Last updated: 2025-04-04
 Authored by: Alan D. Keizer
 
@@ -66,6 +66,76 @@ These identifiers ensure that various types of biomedical literature are easily 
 //  title                   String    No              Article title
 //  volume                  String    Yes             Volume number
 //  webLink                 String    Yes             Link to article
+
+21. Below is a rundown of what we’re looking at—PubMed’s plain text “meta file” format is basically a series of key–value pairs. The “left column” (the keys) is made up of standardized abbreviations that tell you what each piece of data is. (And yes, the one you’ve explicitly listed is only the PMID, but when you grab the full “=pubmed” format, you see a host of these.)
+
+Here’s a quick cheat sheet of the most common variables you’ll find:
+	•	PMID
+– What it is: The PubMed Identifier, a unique number assigned to every record.
+– Why it matters: It’s your go-to reference number for tracking or citing that publication.
+	•	OWN
+– What it is: Typically indicates the “owner” of the record, usually “NLM” (National Library of Medicine).
+– Why it matters: It shows who’s responsible for curating the record.
+	•	STAT
+– What it is: The status of the record, such as “MEDLINE” for fully indexed articles.
+– Why it matters: It helps you know if the record has been processed through the full PubMed pipeline.
+	•	DCOM
+– What it is: The date the record’s indexing was completed (“Date Completed”).
+– Why it matters: Useful for understanding the timeline of when the record was finalized in the system.
+	•	LR
+– What it is: “Last Revised” date.
+– Why it matters: Shows when the record was last updated, which can be handy if you’re tracking corrections or updates.
+	•	IS
+– What it is: The ISSN (International Standard Serial Number) for the journal. Sometimes you’ll see more than one—often for print and electronic versions.
+– Why it matters: It helps you verify the journal identity and sometimes even differentiate between formats.
+	•	VI and IP
+– What they are: Volume (VI) and Issue (IP) numbers of the journal.
+– Why they matter: Essential for locating the article in the physical or digital journal archive.
+	•	DP
+– What it is: The Publication Date (“Date of Publication”).
+– Why it matters: Provides the context of when the research was published.
+	•	TI
+– What it is: The Title of the article.
+– Why it matters: Obviously, it’s the headline that tells you what the paper is about.
+	•	PG
+– What it is: Pagination—the page numbers where the article appears in the journal.
+– Why it matters: Critical for citation and retrieval in the print world.
+	•	AB
+– What it is: The Abstract, a summary of the article.
+– Why it matters: Offers a quick glimpse into the study’s purpose and findings without having to dig through the full text.
+	•	AU/FAU
+– What they are: “AU” is usually a list of abbreviated author names, whereas “FAU” lists the full author names.
+– Why they matter: They give you the credit roll for the research and help you locate more work by the same authors.
+	•	AD
+– What it is: Author affiliation information (where the authors are based).
+– Why it matters: Helps in understanding the context and sometimes the funding or institutional background of the study.
+	•	LA
+– What it is: The Language in which the article is written.
+– Why it matters: Useful if you need to know whether you’re looking at an English-language paper or something else.
+	•	PT
+– What it is: Publication Type (for example, “Journal Article”, “Review”, “Clinical Trial”, etc.).
+– Why it matters: This gives you an at-a-glance idea of the article’s format and content focus.
+	•	TA and JT
+– What they are: “TA” is the journal’s abbreviated title, while “JT” is the full journal title.
+– Why they matter: They help with accurate citation and identification of the source.
+	•	JID
+– What it is: The unique Journal Identifier used within PubMed’s indexing system.
+– Why it matters: It’s part of the behind-the-scenes bookkeeping that keeps everything straight.
+	•	RN
+– What it is: Registry Number for substances (often chemicals) mentioned in the paper.
+– Why it matters: It’s particularly important for biomedical research where specific compounds are discussed.
+	•	MH
+– What it is: Medical Subject Headings (MeSH terms) that index the content of the article.
+– Why it matters: They’re key for search and retrieval in PubMed, letting you find articles by topic.
+	•	EDAT, MHDA, CRDT, etc.
+– What they are: Various dates indicating when the record was entered, MeSH terms were assigned, and when the record was created.
+– Why they matter: These dates help track the record’s lifecycle and update history.
+
+A couple of notes:
+	•	The URL with ?format=pmid is the minimal format (just the unique identifier), whereas ?format=pubmed gives you the full metadata including all these fields.
+	•	These abbreviations come from a long-standing legacy system—think of them as PubMed’s shorthand that’s stuck around because it works, even if it feels like it was designed in a different era.
+
+In short, every variable on the left is a field label that tells you what kind of bibliographic or indexing information follows. If you have a file that shows more than just “PMID” and you need a hand deciphering any extra fields, let me know which ones are giving you trouble, and I can break those down too.
 
 Software Development Environment:
 

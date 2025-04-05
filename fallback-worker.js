@@ -8,10 +8,11 @@
  * This Cloudflare Worker acts as a proxy fallback to bypass browser CORS
  * restrictions when accessing raw PubMed metadata using the /?format=pubmed endpoint.
  *
- * Version: 00.003.032-alpha
+ * Version: 00.003.033-alpha
  *
  * Change Log:
- *  - Initial full implementation with CORS headers and PMID validation
+ *  - Cleaned up response formatting
+ *  - Improved error response handling with consistent headers
  */
 
 export default {

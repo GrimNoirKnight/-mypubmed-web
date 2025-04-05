@@ -8,12 +8,12 @@
   A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
   with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
 
-  Version: 00.003.032-alpha
+  Version: 00.003.033-alpha
 
   Change Log:
-   - Header changed to "MyPubMed" and tagline updated
-   - Per-article "Show Attributes" toggle added
-   - README restored with full attribute spec
+   - Fixed broken search and button functionality
+   - README and Save Article now functional again
+   - Added mutual exclusivity to checkboxes
 -->
 
 <!DOCTYPE html>
@@ -182,8 +182,8 @@
 
 <main>
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search PubMed..." onkeypress="if(event.key === 'Enter'){searchPubMed()}">
-    <button onclick="searchPubMed()">Search</button>
+    <input type="text" id="searchInput" placeholder="Search PubMed..." />
+    <button id="searchButton">Search</button>
     <button onclick="showSavedArticles()">View Saved Articles</button>
     <button onclick="toggleReadme()">Show README</button>
 
@@ -234,11 +234,28 @@
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.032-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.033-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
 <script src="main.js"></script>
-</body>
-</html>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("searchButton").addEventListener("click", () => searchPubMed());
+    document.getElementById("searchInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") searchPubMed();
+    });
+
+    const filter = document.getElementById("filterStrict");
+    const fallback = document.getElementById("fallbackPlain");
+
+    filter.addEventListener("change", () => {
+      if (filter.checked) fallback.checked = false;
+    });
+
+    fallback.addEventListener("change", () => {
+      if (fallback.checked) filter.checked = false;
+    });
+  });
+</script>
 </body>
 </html>

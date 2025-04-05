@@ -87,22 +87,33 @@ Begin Test:
 
 
 
-           6.1. Click on View on PubMed to view the article separately on the PubMed website.
+           6.1. Click on View on PubMed to view the article separately on the PubMed website:
 
-                Results:
-
-
-
-                Notes:
+                Results:  
 
 
 
-           6.2. Click on Save Article
-
-                Results:
+                Notes:  
 
 
-                Notes:
+
+           6.2. Click on Save Article:
+
+                Results:  
+
+
+                Notes:  
+
+
+
+
+           6.3 Click Show Attributes:
+
+               Resuults:  
+
+
+
+               Notes:  
 
 
 
@@ -128,4 +139,6 @@ Begin Test:
 
 
 
+
+TEST NOTES:
 

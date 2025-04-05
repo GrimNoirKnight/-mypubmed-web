@@ -20,120 +20,250 @@ Ready.
 Debug Log:
 (standby... initializing)
 
+
          Notes:  
 
-Looks good.
+Expected
 
    	  1. Click Search with no check boxes:  
 
          Result:  
 
-Search button does not work.
+Articles Found: 14
 
          Notes:  
 
-Fix it.
+Still not listing all 38, and the number found varies due to errors.
 
 
    	  2. Click search with Require All Metadata checked:  
 
-         Result:  
+          Result:  
 
-Search button does not work.
+Articles Found: 14
 
          Notes:  
 
-Fix it.
+Still not listing all 38, and the number found varies due to errors.
+
 
 
    	  3. Click Search with Use Plain-Text Fallback checked:  
 
          Result:  
 
-Search button does not work.
+Articles Found: 38
+
+
 
          Notes:  
 
-Fix it.
+I asked for this during the test for 31 that you change how this is viewed.
 
 
    	  4. Click Search with both checked:  
 
          Result:  
 
-Search button does not work.
+Articles Found: 0
+
+No articles matched.
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 38 IDs
+> Fetching: 39528076 (fallback)
+> Fetching: 38778343 (fallback)
+> Fetching: 38335658 (fallback)
+> Fetching: 38190273 (fallback)
+> Fetching: 36711651 (fallback)
+> Fetching: 34678230 (fallback)
+> Fetching: 34216154 (fallback)
+> Fetching: 33815353 (fallback)
+> Fetching: 33298334 (fallback)
+> Fetching: 32956517 (fallback)
+> Fetching: 32690657 (fallback)
+> Fetching: 32497151 (fallback)
+> Fetching: 30529211 (fallback)
+> Fetching: 30291491 (fallback)
+> Fetching: 25857324 (fallback)
+> Fetching: 24139960 (fallback)
+> Fetching: 24036373 (fallback)
+> Fetching: 23892791 (fallback)
+> Fetching: 21480865 (fallback)
+> Fetching: 21449853 (fallback)
+> Fetching: 19591937 (fallback)
+> Fetching: 18037503 (fallback)
+> Fetching: 17320842 (fallback)
+> Fetching: 15389382 (fallback)
+> Fetching: 12697742 (fallback)
+> Fetching: 12535983 (fallback)
+> Fetching: 12505705 (fallback)
+> Fetching: 11015613 (fallback)
+> Fetching: 8387304 (fallback)
+> Fetching: 8388853 (fallback)
+> Fetching: 2450171 (fallback)
+> Fetching: 3024047 (fallback)
+> Fetching: 310454 (fallback)
+> Fetching: 1005913 (fallback)
+> Fetching: 965964 (fallback)
+> Fetching: 1113115 (fallback)
+> Fetching: 4824510 (fallback)
+> Fetching: 4695669 (fallback)
 
          Notes:  
 
-Button toggle still has not yet been implimented.  Why?
+These check boxes need to toggle, and I prefer a radio buttion.  Humans can relate to toggling radio buttons.
 
 
    	  5. Clicked “Show README”:  
 
          Result:  
 
-Button does not work.
+Ready.
+
+Debug Log:
+(standby... initializing)
+
+README: Attribute Reference Table
+
+Attribute Name	Type	Optional	Notes
+pmid	String	No	PubMed ID
+title	String	No	Article Title
+abstract	String	Yes	Abstract content
+affiliations	String	Yes	Author affiliations
+authors	String	No	Author list
+conflictOfInterest	String	Yes	COI disclosures
+dateSaved	Date	Yes	Save timestamp
+doi	String	Yes	Digital Object ID
+fullTextAvailable	Boolean	Yes	PMC open access?
+funding	String	Yes	Funding sources
+issue	String	Yes	Issue number
+journal	String	No	Journal name
+keywords	String	Yes	Publisher keywords
+meSHterms	String	Yes	Medical subject headings
+pages	String	Yes	Page range
+pmcid	String	Yes	PubMed Central ID
+pubDate	Date	No	Publication date
+volume	String	Yes	Volume number
+webLink	String	Yes	PubMed URL
+
 
          Notes:  
 
-Fix it.
+
 
 
    	  6. Clicked Save Article (PMID 39528076):  
 
          Result:  
 
-Search button does not work.  Could not test.
+Buton does not work.
 
          Notes:  
 
-Fix it
 
 
-           6.1. Click on View on PubMed to view the article separately on the PubMed website.
 
-                Results:
+           6.1. Click on View on PubMed to view the article separately on the PubMed website:
 
-Search button does not work.  Could not test.
+                Results:  
 
-                Notes:
+https://pubmed.ncbi.nlm.nih.gov/39528076/
 
-Fix it.
+                Notes:  
+
+Expected.
+
+           6.2. Click on Save Article:
+
+                Results:  
+
+Does not work.
+
+                Notes:  
 
 
-           6.2. Click on Save Article
 
-                Results:
 
-Search button does not work.  Could not test.
+           6.3 Click Show Attributes:
 
-                Notes:
+               Resuults:  
 
-Fix it.
+Does not work.
+
+               Notes:  
+
+
 
 
    	  7. Clicked on View Saved Articles:  
 
          Result:  
 
-Search button does not work.  Could not test.
+No saved articles to view.
 
          Notes:  
 
-Fix it.
+
 
 
    	  8. Clicked Remove from Saved (39528076):  
 
          Result:  
 
-Search button does not work.  Could not test.
+No saved articles.
 
          Notes:  
 
-Fix it.
 
 
-OTHER NOTES:
+TEST NOTES:
 
-Fix everything above.
+1.  After clicking Search, the website gives no visual feedback that it is doing something.  The search button should change from US Flag Red to US Flag Blue while it is searching, and change back afterward.
+
+2.  Is it possible to put an X in the search bar to delete existing text within it?
+
+3.  Could you please put the Debug Log in the left column, next to the list of articles.
+
+4.  Let's put the README button in the left column, next to the articles, and make it a 9 point arial list.
+
+5.  Put the Dubug Log under the README button, and the README text after the button is pressed.
+
+6.  Can we change the mouse cursor while we wait for the search?  If so, impliment it.    
+
+7.  Is it possible to make the "Journal" a clickable link?
+
+8.  The DOI for the articles is not showing up on any searches, nor are the following:
+
+    * PMID (PubMed Identifier): A unique number assigned to each article indexed in PubMed. Helps in quickly finding specific articles within the database.
+    * DOI (Digital Object Identifier): An alphanumeric string assigned to digital content like journal articles. Provides a persistent link to the content online.
+    * PMCID (PubMed Central Identifier): A unique number for articles archived in PubMed Central. Required for NIH-funded research compliance.
+    * NIHMSID (NIH Manuscript Submission Identifier): A temporary identifier for manuscripts submitted to the NIH Manuscript Submission system until they receive a PMCID.
+    * ISSN (International Standard Serial Number): An eight-digit code used to uniquely identify periodical publications like journals.
+    * ISBN (International Standard Book Number): A unique identifier for books and other non-serial publications.
+
+    They should have all of what is available after the PMID.  Like this:  PMID: 39528076  DOI: 10.1016/j.pneurobio.2024.102683
+    
+    The DOI should be a clickable link.  A link for PMID 39528076 for instance looks like this: https://doi.org/10.1016/j.pneurobio.2024.102683
+    
+ 9. From information within the metadata, there is a way to create a direct text link to the article.  For example 39528076 has these two lines in the metadata:
+ 
+    LID - S0301-0082(24)00119-9 [pii]
+    &
+    AID - S0301-0082(24)00119-9 [pii]
+ 
+    With this information we can create a "Full Text Link" at 
+ 
+    https://linkinghub.elsevier.com/retrieve/pii/S0301-0082(24)00119-9
+    
+10. DOI links are constructed this way for 38190273 for example by reading the metadata:
+
+    LID - 10.1089/can.2023.0014 [doi]
+    &
+    AID - 10.1089/can.2023.0014 [doi]
+    
+    https://doi.org/10.1089/can.2023.0014
+    
+11.  Save Article buttoon is not working.
