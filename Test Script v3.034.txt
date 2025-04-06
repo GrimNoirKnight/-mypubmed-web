@@ -1,0 +1,183 @@
+v00.003.034-alpha Test Procedure:
+
+Instructions:
+
+  A. The search tearm is "Myelin THC" for each search.
+
+  B. Before each "Click Search", enter the search term and follow the instructions.
+
+
+Begin Test:
+
+   Open www.mypubmed.com:
+
+   	  0. Page loads before search:
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+   	  1. Click Search with no check boxes:  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+   	  2. Click search with Require All Metadata checked:  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+   	  3. Click Search with Use Plain-Text Fallback checked:  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+   	  4. Click Search with both checked:  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+   	  5. Clicked “Show README”:  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+   	  6. Clicked Save Article (PMID 39528076 after search):  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+         6.1. Click on View on PubMed to view the article separately on the PubMed website (PMID 39528076):
+
+              Results:  
+
+See TEST NOTES.
+
+              Notes:  
+
+
+
+         6.3. Click Show Attributes (PMID 39528076):
+
+              Results:  
+
+See TEST NOTES.
+
+              Notes:  
+
+
+
+
+   	     6.4. Clicked on View Saved Articles:  
+
+              Result:  
+
+See TEST NOTES.
+
+              Notes:  
+
+
+
+
+   	  8. Clicked Remove from Saved (39528076):  
+
+         Result:  
+
+See TEST NOTES.
+
+         Notes:  
+
+
+
+
+TEST NOTES:
+
+The UI is usable enough so that we can focus on the errors that stop the articles from loading:
+
+
+      Debug Log:
+      
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 20 IDs
+> Fetching: 39528076 (xml)
+> Fetching: 38778343 (xml)
+> Fetching: 38335658 (xml)
+> Fetching: 38190273 (xml)
+> Fetching: 36711651 (xml)
+> Fetching: 34678230 (xml)
+> Fetching: 34216154 (xml)
+> Fetching: 33815353 (xml)
+> Fetching: 33298334 (xml)
+> Fetching: 32956517 (xml)
+> Fetching: 32690657 (xml)
+> Fetching: 32497151 (xml)
+> Fetching: 30529211 (xml)
+> Fetching: 30291491 (xml)
+> Fetching: 25857324 (xml)
+> Fetching: 24139960 (xml)
+> Fetching: 24036373 (xml)
+> Fetching: 23892791 (xml)
+> Fetching: 21480865 (xml)
+> Fetching: 21449853 (xml)
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Error fetching 38335658: Load failed
+> Error fetching 33298334: Load failed
+> Error fetching 30529211: Load failed
+> Error fetching 34678230: Load failed
+> Error fetching 32956517: Load failed
+> Error fetching 32497151: Load failed
+> Error fetching 25857324: Load failed
+> Error fetching 23892791: Load failed
+> Error fetching 21480865: Load failed
+> Error fetching 33815353: Load failed
+> Error fetching 30291491: Load failed
+> Error fetching 34216154: Load failed
+> Error fetching 24139960: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 24036373: Load failed
+> Error fetching 21449853: Load failed
+
+
+Let's focus on this.  Fix the UI later.

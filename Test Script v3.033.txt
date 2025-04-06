@@ -357,7 +357,7 @@ NOT APPLIED TO V3.033!
 
 NOT APPLIED TO V3.033!
 
-6.  Can we change the mouse cursor while we wait for the search?  If so, impliment it.
+6.  Can we change the mouse cursor while we wait for the search?  If so, implement it.
 
 NOT APPLIED TO V3.033!
 
@@ -400,6 +400,6 @@ NOT APPLIED TO V3.033!
     
     NOT APPLIED TO V3.033!
     
-11. Save Article buttoon is not working.
+11. Save Article button is not working.
 
     NOT APPLIED TO V3.033!

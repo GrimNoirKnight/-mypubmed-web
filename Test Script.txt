@@ -1,4 +1,4 @@
-v00.003.000-alpha Test Procedure:
+v00.003.034-alpha Test Procedure:
 
 Instructions:
 
@@ -76,7 +76,7 @@ Begin Test:
 
 
 
-   	  6. Clicked Save Article (PMID 39528076):  
+   	  6. Clicked Save Article (PMID 39528076 after search):  
 
          Result:  
 
@@ -87,44 +87,34 @@ Begin Test:
 
 
 
-           6.1. Click on View on PubMed to view the article separately on the PubMed website:
+         6.1. Click on View on PubMed to view the article separately on the PubMed website (PMID 39528076):
 
-                Results:  
-
-
-
-                Notes:  
+              Results:  
 
 
 
-           6.2. Click on Save Article:
-
-                Results:  
-
-
-                Notes:  
+              Notes:  
 
 
 
+         6.3. Click Show Attributes (PMID 39528076):
 
-           6.3 Click Show Attributes:
-
-               Resuults:  
-
+              Resuults:  
 
 
-               Notes:  
+
+              Notes:  
 
 
 
 
-   	  7. Clicked on View Saved Articles:  
+   	     6.4. Clicked on View Saved Articles:  
 
-         Result:  
+              Result:  
 
 
 
-         Notes:  
+             Notes:  
 
 
 
@@ -137,7 +127,7 @@ Begin Test:
 
          Notes:  
 
-              
+
 
 
 TEST NOTES:
