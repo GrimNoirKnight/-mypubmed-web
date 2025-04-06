@@ -1,0 +1,405 @@
+v00.003.033-alpha Test Procedure:
+
+Instructions:
+
+  A. The search tearm is "Myelin THC" for each search.
+
+  B. Before each "Click Search", enter the search term and follow the instructions.
+
+
+Begin Test:
+
+   Open www.mypubmed.com:
+
+   	  0. Page loads before search:
+
+         Result:  
+
+Ready.
+
+Debug Log:
+(standby... initializing)
+
+         Notes:  
+
+ I asked you to put the debug log in the left column!  
+
+   	  1. Click Search with no check boxes:  
+
+         Result:  
+
+Articles Found: 2
+
+Title: CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.
+Authors: Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos
+PMID: 39528076
+DOI: 10.1016/j.pneurobio.2024.102683
+Abstract:
+Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB1 receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB1 receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB1-deficient mice. Overall, this study identifies CB1 receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders.
+Journal: Progress in neurobiology
+Publication Date: 2024
+Metadata Score: 5/5
+View on PubMed
+Save Article  Show Attributes
+Title: Selected cannabis cultivars modulate glial activation: in vitro and in vivo studies.
+Authors: Sigal Fleisher-Berkovich, Nitzan Sharon, Yvonne Ventura, Valeria Feinshtein, Jonathan Gorelick, Nirit Bernstein, Shimon Ben-Shabat
+PMID: 38778343
+DOI: 10.1186/s42238-024-00232-0
+Abstract:
+Multiple sclerosis (MS) is a chronic autoimmune disease of the central nervous system characterized by neuroinflammation, demyelination and axonal loss. Cannabis, an immunomodulating agent, is known for its ability to treat MS effectively. However, due to variations in the profile of secondary metabolites, especially cannabinoids, among cannabis cultivars, the effectiveness of cannabis treatment can vary, with significant variability in the effects on different biological parameters. For screening available cultivars, cellular in vitro as well as pre-clinical in vivo assays, are required to evaluate the effectiveness of the wide range of chemical variability that exists in cannabis cultivars. This study evaluated comparatively three chemically diverse cannabis cultivars, CN2, CN4 and CN6, containing different ratios of phytocannabinoids, for their neuroinflammatory activity in MS model.
+Journal: Journal of cannabis research
+Publication Date: 2024
+Metadata Score: 5/5
+View on PubMed
+Save Article  Show Attributes
+
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 20 IDs
+> Fetching: 39528076 (xml)
+> Fetching: 38778343 (xml)
+> Fetching: 38335658 (xml)
+> Fetching: 38190273 (xml)
+> Fetching: 36711651 (xml)
+> Fetching: 34678230 (xml)
+> Fetching: 34216154 (xml)
+> Fetching: 33815353 (xml)
+> Fetching: 33298334 (xml)
+> Fetching: 32956517 (xml)
+> Fetching: 32690657 (xml)
+> Fetching: 32497151 (xml)
+> Fetching: 30529211 (xml)
+> Fetching: 30291491 (xml)
+> Fetching: 25857324 (xml)
+> Fetching: 24139960 (xml)
+> Fetching: 24036373 (xml)
+> Fetching: 23892791 (xml)
+> Fetching: 21480865 (xml)
+> Fetching: 21449853 (xml)
+> Error fetching 36711651: Load failed
+> Error fetching 38190273: Load failed
+> Error fetching 38335658: Load failed
+> Error fetching 34678230: Load failed
+> Error fetching 34216154: Load failed
+> Error fetching 30529211: Load failed
+> Error fetching 33298334: Load failed
+> Error fetching 30291491: Load failed
+> Error fetching 21480865: Load failed
+> Error fetching 21449853: Load failed
+> Error fetching 33815353: Load failed
+> Error fetching 32956517: Load failed
+> Error fetching 23892791: Load failed
+> Error fetching 25857324: Load failed
+> Error fetching 24036373: Load failed
+> Error fetching 32497151: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 24139960: Load failed
+
+         Notes:  
+
+This is everything that was displayed.  Not the usual 14 to 18 articles.  And the formatting is not nice like 32.  There is no seperation between the attributes.  It is bunched together.  I also asked for the search button to be US Flag Blue while the search was busy.
+
+
+   	  2. Click search with Require All Metadata checked:  
+
+         Result:  
+
+Articles Found: 12
+
+Title: CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.
+Authors: Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos
+PMID: 39528076
+DOI: 10.1016/j.pneurobio.2024.102683
+Abstract:
+Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB1 receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB1 receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB1-deficient mice. Overall, this study identifies CB1 receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders.
+Journal: Progress in neurobiology
+Publication Date: 2024
+Metadata Score: 5/5
+View on PubMed
+Save Article  Show Attributes
+
+
+         Notes:  
+
+This:
+
+Title: CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.
+Authors: Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos
+PMID: 39528076
+DOI: 10.1016/j.pneurobio.2024.102683
+Abstract:
+Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB1 receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB1 receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB1-deficient mice. Overall, this study identifies CB1 receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders.
+Journal: Progress in neurobiology
+Publication Date: 2024
+Metadata Score: 5/5
+View on PubMed
+Save Article  Show Attributes
+
+Should look like this (the way it was with 32):
+
+Title: CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.
+
+Authors: Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos
+
+PMID: 39528076  DOI: 10.1016/j.pneurobio.2024.102683
+
+Abstract:
+
+Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB1 receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB1 receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB1-deficient mice. Overall, this study identifies CB1 receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders.
+
+Journal: Progress in neurobiology
+
+Publication Date: 2024
+
+Metadata Score: 5/5
+
+View on PubMed
+
+Save Article  Show Attributes
+
+
+   	  3. Click Search with Use Plain-Text Fallback checked:  
+
+         Result:  
+
+Articles Found: 0
+Debug Log:
+(standby... initializing)
+> Searching PubMed for: Myelin THC
+> Found 20 IDs
+> Fetching: 39528076 (fallback)
+> Fetching: 38778343 (fallback)
+> Fetching: 38335658 (fallback)
+> Fetching: 38190273 (fallback)
+> Fetching: 36711651 (fallback)
+> Fetching: 34678230 (fallback)
+> Fetching: 34216154 (fallback)
+> Fetching: 33815353 (fallback)
+> Fetching: 33298334 (fallback)
+> Fetching: 32956517 (fallback)
+> Fetching: 32690657 (fallback)
+> Fetching: 32497151 (fallback)
+> Fetching: 30529211 (fallback)
+> Fetching: 30291491 (fallback)
+> Fetching: 25857324 (fallback)
+> Fetching: 24139960 (fallback)
+> Fetching: 24036373 (fallback)
+> Fetching: 23892791 (fallback)
+> Fetching: 21480865 (fallback)
+> Fetching: 21449853 (fallback)
+> Error fetching 39528076: Load failed
+> Error fetching 38778343: Load failed
+> Error fetching 38335658: Load failed
+> Error fetching 38190273: Load failed
+> Error fetching 36711651: Load failed
+> Error fetching 34678230: Load failed
+> Error fetching 34216154: Load failed
+> Error fetching 33815353: Load failed
+> Error fetching 33298334: Load failed
+> Error fetching 32956517: Load failed
+> Error fetching 32690657: Load failed
+> Error fetching 32497151: Load failed
+> Error fetching 30529211: Load failed
+> Error fetching 30291491: Load failed
+> Error fetching 25857324: Load failed
+> Error fetching 24139960: Load failed
+> Error fetching 24036373: Load failed
+> Error fetching 23892791: Load failed
+> Error fetching 21480865: Load failed
+> Error fetching 21449853: Load failed
+
+         Notes:  
+
+"Face Palm"  Fix it!
+
+
+   	  4. Click Search with both checked:  
+
+         Result:  
+
+Buttons toggle now as expected.
+
+         Notes:  
+
+Very good.
+
+
+   	  5. Clicked “Show README”:  
+
+         Result:  
+
+Ready.
+Debug Log:
+(standby... initializing)
+README: Attribute Reference Table
+
+Attribute Name	Type	Optional	Notes
+pmid	String	No	PubMed ID
+title	String	No	Article Title
+abstract	String	Yes	Abstract content
+affiliations	String	Yes	Author affiliations
+authors	String	No	Author list
+conflictOfInterest	String	Yes	COI disclosures
+dateSaved	Date	Yes	Save timestamp
+doi	String	Yes	Digital Object ID
+fullTextAvailable	Boolean	Yes	PMC open access?
+funding	String	Yes	Funding sources
+issue	String	Yes	Issue number
+journal	String	No	Journal name
+keywords	String	Yes	Publisher keywords
+meSHterms	String	Yes	Medical subject headings
+pages	String	Yes	Page range
+pmcid	String	Yes	PubMed Central ID
+pubDate	Date	No	Publication date
+volume	String	Yes	Volume number
+webLink	String	Yes	PubMed URL
+
+
+         Notes:  
+
+You are supposed to put that in the left column above the log.
+
+
+   	  6. Clicked Save Article (PMID 39528076):  
+
+                Results:  
+
+Does not save.
+
+                Notes:  
+
+You were supposed to fix this.
+
+
+
+
+           6.1. Click on View on PubMed to view the article separately on the PubMed website:
+
+                Results:  
+
+https://pubmed.ncbi.nlm.nih.gov/39528076/
+
+                Notes:  
+
+As expected.
+
+
+
+           6.2 Click Show Attributes (PMID 39528076):
+
+               Results:  
+
+{
+  "pmid": "39528076",
+  "title": "CB1 receptors in NG2 cells mediate cannabinoid-evoked functional myelin regeneration.",
+  "abstract": "Defects in myelin homeostasis have been reported in many neuropathological conditions. Cannabinoid compounds have been shown to efficiently promote myelin regeneration in animal models of demyelination. However, it is still unknown whether this action relies mostly on a cell autonomous effect on oligodendroglial-lineage-NG2 cells. By using conditional genetic mouse models, here we found that cannabinoid CB1 receptors located on NG2 cells are required for oligodendroglial differentiation and myelin regeneration after demyelination. Selective CB1 receptor gene depletion in NG2 cells following toxin-induced demyelination disrupted oligodendrocyte regeneration and functional remyelination and exacerbated axonal damage. These deficits were rescued by pharmacological blockade of the RhoA/ROCK/Cofilin pathway. Conversely, tetrahydrocannabinol administration promoted oligodendrocyte regeneration and functional remyelination in wild-type but not Ng2-CB1-deficient mice. Overall, this study identifies CB1 receptors as essential modulators of remyelination and support the therapeutic potential of cannabinoids for promoting remyelination in neurological disorders.",
+  "authors": "Aníbal Sánchez de la Torre, Sara Ezquerro-Herce, Alba Huerga-Gómez, Ester Sánchez-Martín, Juan Carlos Chara, Carlos Matute, Krisztina Monory, Susana Mato, Beat Lutz, Manuel Guzmán, Tania Aguado, Javier Palazuelos",
+  "journal": "Progress in neurobiology",
+  "pubDate": "2024",
+  "doi": "10.1016/j.pneurobio.2024.102683",
+  "metadataScore": 5
+}
+
+               Notes:  
+
+I always have to click "Show Attributes" twice to get it to work.  Also, while the attributes are shown, the button should change to "Hide Attributes" in US Flag Blue.
+
+
+   	  7. Clicked on View Saved Articles (PMID 39528076):  
+
+         Result:  
+
+Fetching saved articles...
+
+Debug Log:
+(standby... initializing)
+
+         Notes:  
+
+
+
+
+   	  8. Clicked Remove from Saved (PMID 39528076):  
+
+         Result:  
+
+None.   Cannot save articles
+
+         Notes:  
+
+              
+
+
+TEST NOTES:
+
+You applied only one thing that I asked for after testing v32:
+
+TEST NOTES from v3.032:
+
+1.  After clicking Search, the website gives no visual feedback that it is doing something.  The search button should change from US Flag Red to US Flag Blue while it is searching, and change back afterward.
+
+NOT APPLIED TO V3.033!
+
+2.  Is it possible to put an X in the search bar to delete existing text within it?
+
+NOT APPLIED TO V3.033!
+
+3.  Could you please put the Debug Log in the left column, next to the list of articles.
+
+NOT APPLIED TO V3.033!
+
+4.  Let's put the README button in the left column, next to the articles, and make it a 9 point arial list.
+
+NOT APPLIED TO V3.033!
+
+5.  Put the Dubug Log under the README button, and the README text after the button is pressed.
+
+NOT APPLIED TO V3.033!
+
+6.  Can we change the mouse cursor while we wait for the search?  If so, impliment it.
+
+NOT APPLIED TO V3.033!
+
+7.  Is it possible to make the "Journal" a clickable link?
+
+NOT APPLIED TO V3.033!
+
+8.  The DOI for the articles is not showing up on any searches, nor are the following:
+
+    * PMID (PubMed Identifier): A unique number assigned to each article indexed in PubMed. Helps in quickly finding specific articles within the database.
+    * DOI (Digital Object Identifier): An alphanumeric string assigned to digital content like journal articles. Provides a persistent link to the content online.
+    * PMCID (PubMed Central Identifier): A unique number for articles archived in PubMed Central. Required for NIH-funded research compliance.
+    * NIHMSID (NIH Manuscript Submission Identifier): A temporary identifier for manuscripts submitted to the NIH Manuscript Submission system until they receive a PMCID.
+    * ISSN (International Standard Serial Number): An eight-digit code used to uniquely identify periodical publications like journals.
+    * ISBN (International Standard Book Number): A unique identifier for books and other non-serial publications.
+
+    They should have all of what is available after the PMID.  Like this:  PMID: 39528076  DOI: 10.1016/j.pneurobio.2024.102683
+    
+    The DOI should be a clickable link.  A link for PMID 39528076 for instance looks like this: https://doi.org/10.1016/j.pneurobio.2024.102683
+    
+ 9. From information within the metadata, there is a way to create a direct text link to the article.  For example 39528076 has these two lines in the metadata:
+ 
+    LID - S0301-0082(24)00119-9 [pii]
+    &
+    AID - S0301-0082(24)00119-9 [pii]
+ 
+    With this information we can create a "Full Text Link" at 
+ 
+    https://linkinghub.elsevier.com/retrieve/pii/S0301-0082(24)00119-9
+    
+    NOT APPLIED TO V3.033!
+    
+10. DOI links are constructed this way for 38190273 for example by reading the metadata:
+
+    LID - 10.1089/can.2023.0014 [doi]
+    &
+    AID - 10.1089/can.2023.0014 [doi]
+    
+    https://doi.org/10.1089/can.2023.0014
+    
+    NOT APPLIED TO V3.033!
+    
+11. Save Article buttoon is not working.
+
+    NOT APPLIED TO V3.033!

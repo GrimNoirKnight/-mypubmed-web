@@ -1,20 +1,34 @@
 <!--
-  index.html - For MyPubMed
-
+  MyPubMed: index.html - Version: v00.003.034-alpha
+  ------------------------------------------------------------------------------
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
 
   Description:
-  A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
-  with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
+  Frontend interface for MyPubMed — a browser-based PubMed explorer that fetches
+  and displays article data via the NCBI E-Utilities API. Supports both XML and
+  plain-text fallback metadata parsing, client-side filtering, localStorage
+  caching, and developer debugging tools.
 
-  Version: 00.003.033-alpha
+  Key Features:
+  - Search PubMed by keyword
+  - Render article metadata with toggleable attribute views
+  - Save and view favorite articles locally
+  - Toggle between strict filtering or plain-text fallback
+  - Integrated README and debug panel
+  - Clean, mobile-friendly layout styled in U.S. Flag palette
 
   Change Log:
-   - Fixed broken search and button functionality
-   - README and Save Article now functional again
-   - Added mutual exclusivity to checkboxes
+  - Debug log and README repositioned into left column beside results
+  - README restyled to 9pt Arial and lighter weight
+  - Search button changes to US Flag Blue when searching
+  - Cursor changes to wait indicator during search
+  - Fixed layout spacing and paragraph padding for result sections
+  - Added clickable DOI and Journal links when available
+  - Search input field now has a clear “X” button
+  - Mouse interactions improved for a smoother UI
 -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,14 +64,25 @@
 
     main {
       padding: 30px 20px;
-      max-width: 900px;
+      max-width: 1200px;
       margin: auto;
+      display: flex;
+      gap: 30px;
+    }
+
+    .left-panel {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .right-panel {
+      flex: 2;
     }
 
     input[type="text"] {
       padding: 10px;
       font-size: 16px;
-      width: 60%;
+      width: 100%;
       border: 2px solid #B22234;
       color: #3C3B6E;
     }
@@ -69,7 +94,7 @@
       color: white;
       border: none;
       cursor: pointer;
-      margin-left: 10px;
+      margin: 5px 5px 10px 0;
     }
 
     button:hover {
@@ -91,10 +116,6 @@
       color: white;
     }
 
-    .controls {
-      margin-bottom: 20px;
-    }
-
     .result {
       margin-bottom: 30px;
       border-bottom: 1px solid #ccc;
@@ -103,6 +124,8 @@
 
     .label {
       font-weight: bold;
+      display: block;
+      margin-top: 8px;
     }
 
     a {
@@ -143,9 +166,9 @@
     }
 
     #readme {
-      margin-top: 40px;
-      padding-top: 10px;
-      border-top: 2px solid #B22234;
+      margin-top: 20px;
+      font-size: 9pt;
+      display: none;
     }
 
     #debugPanel {
@@ -155,17 +178,18 @@
       padding: 10px;
       font-size: 0.9em;
       color: #333;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     table {
       border-collapse: collapse;
       margin-top: 10px;
+      font-size: 9pt;
     }
 
     table, th, td {
       border: 1px solid #ccc;
-      padding: 6px 10px;
+      padding: 4px 6px;
     }
 
     th {
@@ -181,62 +205,68 @@
 </header>
 
 <main>
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search PubMed..." />
-    <button id="searchButton">Search</button>
-    <button onclick="showSavedArticles()">View Saved Articles</button>
+  <!-- LEFT COLUMN: README & DEBUG -->
+  <div class="left-panel">
     <button onclick="toggleReadme()">Show README</button>
+    <div id="readme">
+      <h3>README: Attribute Reference Table</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
+          <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
+          <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
+          <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+          <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+          <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
+          <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
+          <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
+          <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
+          <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+          <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+          <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+          <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+          <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <label style="margin-left: 15px;">
-      <input type="checkbox" id="filterStrict"> Require All Metadata
-    </label>
-
-    <label style="margin-left: 15px;">
-      <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
-    </label>
+    <div id="debugPanel">
+      <strong>Debug Log:</strong>
+      <pre>(standby... initializing)</pre>
+    </div>
   </div>
 
-  <div id="results-count"></div>
-  <div id="results">Ready.</div>
-  <div id="debugPanel"><strong>Debug Log:</strong><br><pre>(standby... initializing)</pre></div>
+  <!-- RIGHT COLUMN: SEARCH + RESULTS -->
+  <div class="right-panel">
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search PubMed..." />
+      <button id="searchButton">Search</button>
+      <button onclick="showSavedArticles()">View Saved Articles</button>
 
-  <div id="readme" style="display:none;">
-    <h2>README: Attribute Reference Table</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
-        <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
-        <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
-        <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
-        <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
-        <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
-        <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
-        <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
-        <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
-        <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
-        <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
-        <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
-        <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
-        <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
-        <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
-        <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
-        <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
-        <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
-        <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
-      </tbody>
-    </table>
+      <label style="margin-left: 15px;">
+        <input type="checkbox" id="filterStrict"> Require All Metadata
+      </label>
+
+      <label style="margin-left: 15px;">
+        <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
+      </label>
+    </div>
+
+    <div id="results-count"></div>
+    <div id="results">Ready.</div>
   </div>
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.033-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.034-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
+<!-- Global logic scripts -->
 <script src="main.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {

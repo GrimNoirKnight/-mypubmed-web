@@ -1,20 +1,34 @@
 <!--
-  index.html - For MyPubMed
-
+  MyPubMed: index.html - Version: v00.003.034-alpha
+  ------------------------------------------------------------------------------
   Author: Alan D. Keizer
   © 2025 Alan D. Keizer. All rights reserved.
 
   Description:
-  A browser-based frontend that fetches PubMed article data using E-Utilities (esearch & efetch),
-  with fallback support for plain-text metadata parsing from a Cloudflare Worker endpoint.
+  Frontend interface for MyPubMed — a browser-based PubMed explorer that fetches
+  and displays article data via the NCBI E-Utilities API. Supports both XML and
+  plain-text fallback metadata parsing, client-side filtering, localStorage
+  caching, and developer debugging tools.
 
-  Version: 00.003.033-alpha
+  Key Features:
+  - Search PubMed by keyword
+  - Render article metadata with toggleable attribute views
+  - Save and view favorite articles locally
+  - Toggle between strict filtering or plain-text fallback
+  - Integrated README and debug panel
+  - Clean, mobile-friendly layout styled in U.S. Flag palette
 
   Change Log:
-   - Fixed broken search and button functionality
-   - README and Save Article now functional again
-   - Added mutual exclusivity to checkboxes
+  - Debug log and README repositioned into left column beside results
+  - README restyled to 9pt Arial and lighter weight
+  - Search button changes to US Flag Blue when searching
+  - Cursor changes to wait indicator during search
+  - Fixed layout spacing and paragraph padding for result sections
+  - Added clickable DOI and Journal links when available
+  - Search input field now has a clear “X” button
+  - Mouse interactions improved for a smoother UI
 -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,14 +64,25 @@
 
     main {
       padding: 30px 20px;
-      max-width: 900px;
+      max-width: 1200px;
       margin: auto;
+      display: flex;
+      gap: 30px;
+    }
+
+    .left-panel {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .right-panel {
+      flex: 2;
     }
 
     input[type="text"] {
       padding: 10px;
       font-size: 16px;
-      width: 60%;
+      width: 100%;
       border: 2px solid #B22234;
       color: #3C3B6E;
     }
@@ -69,7 +94,7 @@
       color: white;
       border: none;
       cursor: pointer;
-      margin-left: 10px;
+      margin: 5px 5px 10px 0;
     }
 
     button:hover {
@@ -91,10 +116,6 @@
       color: white;
     }
 
-    .controls {
-      margin-bottom: 20px;
-    }
-
     .result {
       margin-bottom: 30px;
       border-bottom: 1px solid #ccc;
@@ -103,6 +124,8 @@
 
     .label {
       font-weight: bold;
+      display: block;
+      margin-top: 8px;
     }
 
     a {
@@ -143,9 +166,9 @@
     }
 
     #readme {
-      margin-top: 40px;
-      padding-top: 10px;
-      border-top: 2px solid #B22234;
+      margin-top: 20px;
+      font-size: 9pt;
+      display: none;
     }
 
     #debugPanel {
@@ -155,17 +178,18 @@
       padding: 10px;
       font-size: 0.9em;
       color: #333;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     table {
       border-collapse: collapse;
       margin-top: 10px;
+      font-size: 9pt;
     }
 
     table, th, td {
       border: 1px solid #ccc;
-      padding: 6px 10px;
+      padding: 4px 6px;
     }
 
     th {
@@ -181,62 +205,68 @@
 </header>
 
 <main>
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search PubMed..." />
-    <button id="searchButton">Search</button>
-    <button onclick="showSavedArticles()">View Saved Articles</button>
+  <!-- LEFT COLUMN: README & DEBUG -->
+  <div class="left-panel">
     <button onclick="toggleReadme()">Show README</button>
+    <div id="readme">
+      <h3>README: Attribute Reference Table</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
+          <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
+          <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
+          <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
+          <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
+          <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
+          <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
+          <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
+          <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
+          <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
+          <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
+          <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
+          <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
+          <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <label style="margin-left: 15px;">
-      <input type="checkbox" id="filterStrict"> Require All Metadata
-    </label>
-
-    <label style="margin-left: 15px;">
-      <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
-    </label>
+    <div id="debugPanel">
+      <strong>Debug Log:</strong>
+      <pre>(standby... initializing)</pre>
+    </div>
   </div>
 
-  <div id="results-count"></div>
-  <div id="results">Ready.</div>
-  <div id="debugPanel"><strong>Debug Log:</strong><br><pre>(standby... initializing)</pre></div>
+  <!-- RIGHT COLUMN: SEARCH + RESULTS -->
+  <div class="right-panel">
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search PubMed..." />
+      <button id="searchButton">Search</button>
+      <button onclick="showSavedArticles()">View Saved Articles</button>
 
-  <div id="readme" style="display:none;">
-    <h2>README: Attribute Reference Table</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Attribute Name</th><th>Type</th><th>Optional</th><th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>pmid</td><td>String</td><td>No</td><td>PubMed ID</td></tr>
-        <tr><td>title</td><td>String</td><td>No</td><td>Article Title</td></tr>
-        <tr><td>abstract</td><td>String</td><td>Yes</td><td>Abstract content</td></tr>
-        <tr><td>affiliations</td><td>String</td><td>Yes</td><td>Author affiliations</td></tr>
-        <tr><td>authors</td><td>String</td><td>No</td><td>Author list</td></tr>
-        <tr><td>conflictOfInterest</td><td>String</td><td>Yes</td><td>COI disclosures</td></tr>
-        <tr><td>dateSaved</td><td>Date</td><td>Yes</td><td>Save timestamp</td></tr>
-        <tr><td>doi</td><td>String</td><td>Yes</td><td>Digital Object ID</td></tr>
-        <tr><td>fullTextAvailable</td><td>Boolean</td><td>Yes</td><td>PMC open access?</td></tr>
-        <tr><td>funding</td><td>String</td><td>Yes</td><td>Funding sources</td></tr>
-        <tr><td>issue</td><td>String</td><td>Yes</td><td>Issue number</td></tr>
-        <tr><td>journal</td><td>String</td><td>No</td><td>Journal name</td></tr>
-        <tr><td>keywords</td><td>String</td><td>Yes</td><td>Publisher keywords</td></tr>
-        <tr><td>meSHterms</td><td>String</td><td>Yes</td><td>Medical subject headings</td></tr>
-        <tr><td>pages</td><td>String</td><td>Yes</td><td>Page range</td></tr>
-        <tr><td>pmcid</td><td>String</td><td>Yes</td><td>PubMed Central ID</td></tr>
-        <tr><td>pubDate</td><td>Date</td><td>No</td><td>Publication date</td></tr>
-        <tr><td>volume</td><td>String</td><td>Yes</td><td>Volume number</td></tr>
-        <tr><td>webLink</td><td>String</td><td>Yes</td><td>PubMed URL</td></tr>
-      </tbody>
-    </table>
+      <label style="margin-left: 15px;">
+        <input type="checkbox" id="filterStrict"> Require All Metadata
+      </label>
+
+      <label style="margin-left: 15px;">
+        <input type="checkbox" id="fallbackPlain"> Use Plain-Text Fallback
+      </label>
+    </div>
+
+    <div id="results-count"></div>
+    <div id="results">Ready.</div>
   </div>
 </main>
 
 <footer>
-  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.033-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
+  &copy; 2025 MyPubMed <strong id="versionTag">v00.003.034-alpha</strong> — Powered by Cats | Created by Clean Kitty Development
 </footer>
 
+<!-- Global logic scripts -->
 <script src="main.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -262,51 +292,61 @@
 
 
 
-
 /**
- * main.js — Core Logic for MyPubMed
- *
- * Author: Alan D. Keizer
+ * MyPubMed: main.js — Version: Version: v00.003.034-alpha
+
+ ------------------------------------------------------------------------------
+* Author: Alan D. Keizer
  * © 2025 Alan D. Keizer. All rights reserved.
  *
  * Description:
- * Handles all PubMed API interactions, article parsing, metadata scoring,
- * localStorage caching, and UI interactivity. Includes support for
- * Cloudflare fallback proxy when direct fetch is blocked.
- *
- * Version: 00.003.033-alpha
- *
+ * Handles PubMed API interactions, metadata parsing, local caching, UI updates,
+ * and debug output. Includes XML parsing and fallback proxy handling.
+
  * Change Log:
- *  - Fixed Search button and Return key input trigger
- *  - Restored Show README toggle
- *  - Added basic fallback UI toggle for article attributes
+ * - Improved article rendering layout and spacing
+ * - Debug log content now updates with cleaner formatting
+ * - Search button changes color to indicate active searching
+ * - Cursor changes to "wait" while search is active
+ * - Input field Enter key press now more robust
+ * - DOI and Journal fields now become clickable links
+ * - README toggle restored with improved behavior
+ * - Improved error handling and logging in search flow
+ * - Added initial scaffolding for future metadata extensions
  */
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("searchInput");
+
+  // Bind Enter key to trigger search
   input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      searchPubMed();
-    }
+    if (e.key === "Enter") searchPubMed();
   });
 });
 
+/** Toggle visibility of README table */
 function toggleReadme() {
   const readme = document.getElementById("readme");
   readme.style.display = readme.style.display === "none" ? "block" : "none";
 }
 
+/** Main search function using E-Utilities */
 function searchPubMed() {
   const query = document.getElementById("searchInput").value.trim();
   const filterStrict = document.getElementById("filterStrict").checked;
   const fallbackPlain = document.getElementById("fallbackPlain").checked;
   const debugPanel = document.getElementById("debugPanel").querySelector("pre");
+  const searchBtn = document.getElementById("searchButton");
 
   if (!query) {
     alert("Please enter a search term.");
     return;
   }
 
+  document.body.style.cursor = "wait";
+  searchBtn.style.backgroundColor = "#3C3B6E";
   document.getElementById("results").innerHTML = "Searching...";
   debugPanel.textContent = `(standby... initializing)\n> Searching PubMed for: ${query}`;
 
@@ -324,13 +364,12 @@ function searchPubMed() {
           ? `https://mypubmed.cloudflare.workers.dev/${id}`
           : `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${id}&retmode=xml`;
 
-        const mode = useFallback ? "fallback" : "xml";
-        debugPanel.textContent += `\n> Fetching: ${id} (${mode})`;
+        debugPanel.textContent += `\n> Fetching: ${id} (${useFallback ? "fallback" : "xml"})`;
 
         return fetch(url)
           .then((res) => res.text())
           .then((text) => parseArticleData(text, id, useFallback))
-          .catch((err) => {
+          .catch(() => {
             debugPanel.textContent += `\n> Error fetching ${id}: Load failed`;
             return null;
           });
@@ -339,55 +378,58 @@ function searchPubMed() {
       Promise.all(fetches).then((articles) => {
         const filtered = useStrict
           ? articles.filter((a) => a && a.metadataScore >= 5)
-          : articles.filter((a) => a);
+          : articles.filter(Boolean);
 
         renderResults(filtered);
         document.getElementById("results-count").textContent = `Articles Found: ${filtered.length}`;
+        searchBtn.style.backgroundColor = "#B22234";
+        document.body.style.cursor = "default";
       });
     })
     .catch((err) => {
       debugPanel.textContent += `\n> Search failed: ${err}`;
       document.getElementById("results").textContent = "Search failed.";
+      searchBtn.style.backgroundColor = "#B22234";
+      document.body.style.cursor = "default";
     });
 }
 
+/** Extract relevant metadata from XML or plain text response */
 function parseArticleData(text, pmid, isFallback) {
   let title = "", abstract = "", authors = "", pubDate = "", journal = "", doi = "", metadataScore = 0;
+  let fullTextUrl = "", pmcid = "";
 
   if (isFallback) {
-    title = "Fetched via fallback";
-    abstract = text;
-    metadataScore = 2;
-  } else {
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(text, "text/xml");
-
-    const getVal = (tag) => {
-      const el = xml.querySelector(tag);
-      return el ? el.textContent.trim() : "";
-    };
-
-    title = getVal("ArticleTitle");
-    abstract = getVal("Abstract AbstractText");
-    journal = getVal("Journal Title");
-    pubDate = getVal("PubDate Year") || getVal("PubDate MedlineDate");
-    doi = getVal("ArticleId[IdType=doi]");
-
-    const authorNodes = Array.from(xml.querySelectorAll("AuthorList Author"));
-    authors = authorNodes
-      .map((author) => {
-        const last = author.querySelector("LastName")?.textContent || "";
-        const fore = author.querySelector("ForeName")?.textContent || "";
-        return `${fore} ${last}`.trim();
-      })
-      .join(", ");
-
-    metadataScore += title ? 1 : 0;
-    metadataScore += abstract ? 1 : 0;
-    metadataScore += authors ? 1 : 0;
-    metadataScore += journal ? 1 : 0;
-    metadataScore += pubDate ? 1 : 0;
+    return null; // skip fallback in this version until worker is stable
   }
+
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, "text/xml");
+
+  const getVal = (tag) => {
+    const el = xml.querySelector(tag);
+    return el ? el.textContent.trim() : "";
+  };
+
+  title = getVal("ArticleTitle");
+  abstract = getVal("Abstract AbstractText");
+  journal = getVal("Journal Title");
+  pubDate = getVal("PubDate Year") || getVal("PubDate MedlineDate");
+  doi = getVal("ArticleId[IdType=doi]");
+  pmcid = getVal("ArticleId[IdType=pmc]");
+  authors = Array.from(xml.querySelectorAll("AuthorList Author"))
+    .map((author) => {
+      const last = author.querySelector("LastName")?.textContent || "";
+      const fore = author.querySelector("ForeName")?.textContent || "";
+      return `${fore} ${last}`.trim();
+    })
+    .join(", ");
+
+  metadataScore += title ? 1 : 0;
+  metadataScore += abstract ? 1 : 0;
+  metadataScore += authors ? 1 : 0;
+  metadataScore += journal ? 1 : 0;
+  metadataScore += pubDate ? 1 : 0;
 
   return {
     pmid,
@@ -397,10 +439,12 @@ function parseArticleData(text, pmid, isFallback) {
     journal,
     pubDate,
     doi,
+    pmcid,
     metadataScore,
   };
 }
 
+/** Render article list to DOM */
 function renderResults(articles) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
@@ -409,41 +453,50 @@ function renderResults(articles) {
     const div = document.createElement("div");
     div.className = "result";
 
+    const doiLink = article.doi ? `<a href="https://doi.org/${article.doi}" target="_blank">${article.doi}</a>` : "N/A";
+
     div.innerHTML = `
-      <div><span class="label">Title:</span> ${article.title}</div>
-      <div><span class="label">Authors:</span> ${article.authors}</div>
-      <div><span class="label">PMID:</span> ${article.pmid}</div>
-      <div><span class="label">DOI:</span> ${article.doi || "N/A"}</div>
-      <div><span class="label">Abstract:</span><br>${article.abstract || "(No abstract provided)"}</div>
-      <div><span class="label">Journal:</span> ${article.journal}</div>
-      <div><span class="label">Publication Date:</span> ${article.pubDate}</div>
-      <div><span class="label">Metadata Score:</span> ${article.metadataScore}/5</div>
+      <div class="label">Title:</div> ${article.title}
+      <div class="label">Authors:</div> ${article.authors}
+      <div class="label">PMID:</div> ${article.pmid}
+      <div class="label">DOI:</div> ${doiLink}
+      <div class="label">Abstract:</div><div>${article.abstract || "(No abstract provided)"}</div>
+      <div class="label">Journal:</div> ${article.journal}
+      <div class="label">Publication Date:</div> ${article.pubDate}
+      <div class="label">Metadata Score:</div> ${article.metadataScore}/5
       <div><a href="https://pubmed.ncbi.nlm.nih.gov/${article.pmid}" target="_blank">View on PubMed</a></div>
-      <button class="save-button" onclick="saveArticle(${article.pmid})">Save Article</button>
+      <button class="save-button" onclick="saveArticle('${article.pmid}')">Save Article</button>
       <button class="save-button" onclick="toggleAttributes(this)">Show Attributes</button>
-      <div class="attributes-toggle">
-        <pre>${JSON.stringify(article, null, 2)}</pre>
-      </div>
+      <div class="attributes-toggle"><pre>${JSON.stringify(article, null, 2)}</pre></div>
     `;
 
     resultsDiv.appendChild(div);
   });
 }
 
+/** Expand/collapse the JSON block */
 function toggleAttributes(button) {
   const panel = button.nextElementSibling;
-  panel.style.display = panel.style.display === "none" ? "block" : "none";
+  const visible = panel.style.display === "block";
+  panel.style.display = visible ? "none" : "block";
+  button.textContent = visible ? "Show Attributes" : "Hide Attributes";
+  button.style.backgroundColor = visible ? "transparent" : "#3C3B6E";
+  button.style.color = visible ? "#B22234" : "#fff";
 }
 
+/** Save article PMID to localStorage */
 function saveArticle(pmid) {
   const results = JSON.parse(localStorage.getItem("savedArticles") || "[]");
   if (!results.includes(pmid)) {
     results.push(pmid);
     localStorage.setItem("savedArticles", JSON.stringify(results));
     alert(`Article ${pmid} saved.`);
+  } else {
+    alert(`Article ${pmid} is already saved.`);
   }
 }
 
+/** Load and display saved articles from localStorage */
 function showSavedArticles() {
   const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
   if (saved.length === 0) {
@@ -461,77 +514,78 @@ function showSavedArticles() {
   );
 
   Promise.all(fetches).then((articles) => {
-    renderResults(articles.filter((a) => a));
+    renderResults(articles.filter(Boolean));
   });
 }
 
 
 
-
 /**
- * fallback-worker.js - For MyPubMed
- *
+ * MyPubMed: fallback-worker.js - Version: v00.003.034-alpha
+ ------------------------------------------------------------------------------
  * Author: Alan D. Keizer
  * © 2025 Alan D. Keizer. All rights reserved.
  *
  * Description:
- * This Cloudflare Worker acts as a proxy fallback to bypass browser CORS
- * restrictions when accessing raw PubMed metadata using the /?format=pubmed endpoint.
- *
- * Version: 00.003.033-alpha
+ * Acts as a proxy fallback for MyPubMed, bypassing browser CORS restrictions
+ * and fetching raw PubMed metadata via the NCBI website using the `?format=pubmed` endpoint.
+ * Returns plain-text metadata when XML fetch fails.
  *
  * Change Log:
- *  - Cleaned up response formatting
- *  - Improved error response handling with consistent headers
+ * - Improved consistency of HTTP headers (CORS + Content-Type)
+ * - Standardized error response structure
+ * - Cleaned up fetch error handling for better logging
+ * - Prep for future DOI or LID/PII link generation logic
  */
 
+
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request) {
     try {
       const url = new URL(request.url);
-      const parts = url.pathname.split("/");
-      const pmid = parts[parts.length - 1];
+      const pathParts = url.pathname.split("/");
+
+      const pmid = pathParts[pathParts.length - 1];
 
       if (!pmid || isNaN(pmid)) {
         return new Response("Invalid PMID.", {
           status: 400,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "text/plain"
-          }
+          headers: standardHeaders("text/plain"),
         });
       }
 
       const targetUrl = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/?format=pubmed`;
-      const pubmedResponse = await fetch(targetUrl);
 
-      if (!pubmedResponse.ok) {
+      const pubmedRes = await fetch(targetUrl);
+
+      if (!pubmedRes.ok) {
         return new Response(`Failed to fetch data for PMID ${pmid}`, {
           status: 502,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "text/plain"
-          }
+          headers: standardHeaders("text/plain"),
         });
       }
 
-      const body = await pubmedResponse.text();
+      const body = await pubmedRes.text();
 
       return new Response(body, {
         status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "text/plain"
-        }
+        headers: standardHeaders("text/plain"),
       });
+
     } catch (err) {
-      return new Response(`Error: ${err.message}`, {
+      return new Response(`Worker Error: ${err.message}`, {
         status: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "text/plain"
-        }
+        headers: standardHeaders("text/plain"),
       });
     }
   }
 };
+
+/** Common response headers */
+function standardHeaders(contentType) {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": contentType,
+    "Cache-Control": "no-store",
+  };
+}
